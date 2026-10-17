@@ -1,0 +1,343 @@
+<title>Major Arcana v2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Young+Serif&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: light, warm shop. Featured-artist hero, then products, then the parcel, the promise, the people. Grid for shopping, looser for story. */
+:root {
+  /* Daylight & sparkle: cool paper ground, brand blue for ink and action, brand gold for moments */
+  --paper: #F5F7FC;
+  --card: #FFFFFF;
+  --ink: #1B2440;
+  --ink-muted: #566079;
+  --blue: #264D97;
+  --blue-deep: #1D3C78;
+  --gold: #F9BB59;
+  --gold-tint: #FEF1D9;
+  --brand-ink: #222222;
+  --green: #1E7A4C;
+  --rust: #B23F1C;
+  --line: rgba(27, 36, 64, 0.12);
+  --slot: rgba(38, 77, 151, 0.06);
+
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --step--1: 0.8125rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.5rem, 3vw, 2rem);
+  --step-3: clamp(2.25rem, 5vw, 3.5rem);
+
+  --r-sm: 6px; --r-md: 10px; --r-lg: 14px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 1rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.12; margin: 0; text-wrap: balance; }
+h2 { font-size: var(--step-2); }
+p { margin: 0; }
+a { color: var(--blue); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.muted { color: var(--ink-muted); }
+
+/* A clearly marked gap for real content the shop still has to supply. */
+.slot { border: 1.5px dashed rgba(38, 77, 151, 0.35); background: var(--slot); border-radius: var(--r-md); display: grid; place-items: center; text-align: center; padding: 16px; color: var(--blue); font-size: var(--step--1); font-weight: 500; }
+.slot b { display: block; font-size: 0.9375rem; }
+.fill { display: inline-block; padding: 0 6px; border-radius: 4px; background: var(--slot); border: 1px dashed rgba(38, 77, 151, 0.35); color: var(--blue); font-weight: 500; }
+
+/* Header */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); }
+.site-header .wrap { display: flex; align-items: center; gap: 24px; padding-block: 12px; flex-wrap: wrap; }
+.logo { height: 44px; width: auto; display: block; }
+.nav { display: flex; gap: 22px; margin-left: auto; }
+.nav a { color: var(--ink); text-decoration: none; font-weight: 500; }
+.nav a:hover { color: var(--blue); }
+.cart { font: inherit; font-weight: 700; border: 1px solid var(--line); background: var(--card); color: var(--ink); border-radius: var(--r-sm); padding: 6px 12px; cursor: pointer; }
+@media (max-width: 720px) {
+  .logo { height: 36px; }
+  .cart { margin-left: auto; }
+  .nav { order: 3; width: 100%; margin-left: 0; overflow-x: auto; }
+  .nav a { white-space: nowrap; }
+}
+
+/* Buttons */
+.btn { font: inherit; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 20px; border-radius: var(--r-sm); border: 0; cursor: pointer; text-decoration: none; transition: background-color 150ms ease-out, transform 100ms; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-deep); }
+.btn-gold { background: var(--gold); color: var(--brand-ink); }
+.link-arrow { font-weight: 700; text-decoration: none; }
+.link-arrow:hover { text-decoration: underline; }
+
+/* Hero: the featured artist */
+.hero { padding-block: 56px 72px; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+.art-frame { position: relative; max-width: 420px; justify-self: center; width: 100%; }
+.art-frame .slot { aspect-ratio: 4 / 5; border-radius: var(--r-lg); transform: rotate(-2.5deg); background: var(--card); box-shadow: 0 18px 40px -24px rgba(27, 36, 64, 0.45); }
+.art-credit { margin-top: 18px; display: flex; justify-content: space-between; gap: 12px; font-size: 0.9375rem; flex-wrap: wrap; }
+.hero h1 { font-size: var(--step-3); }
+.hero-copy { margin-top: 20px; font-size: 1.125rem; color: var(--ink-muted); max-width: 44ch; }
+.hero-actions { margin-top: 28px; display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+@media (max-width: 820px) {
+  .hero { padding-block: 32px 56px; }
+  .hero .wrap { grid-template-columns: 1fr; gap: 32px; }
+  .art-frame { order: 2; max-width: 300px; }
+}
+
+/* Sections */
+.band { padding-block: 72px; }
+.band + .band { border-top: 1px solid var(--line); }
+.band-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+
+/* Product cards: everything visible at once, no hover tricks */
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 540px) { .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } }
+.product { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: border-color 150ms ease-out, box-shadow 150ms ease-out; }
+.product:hover { border-color: rgba(38, 77, 151, 0.4); box-shadow: 0 8px 22px -16px rgba(27, 36, 64, 0.5); }
+.product-img { aspect-ratio: 5 / 4; background: #EEF1F8; display: grid; place-items: center; }
+.product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+.product-body { padding: 12px 14px 14px; display: grid; gap: 2px; }
+.jp { font-size: var(--step--1); color: var(--ink-muted); }
+.product h3 { font-family: var(--font-body); font-weight: 700; font-size: 1rem; line-height: 1.3; }
+.product-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.price { font-weight: 700; font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+.code { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-muted); }
+.stock { font-size: var(--step--1); font-weight: 700; display: inline-flex; gap: 6px; align-items: center; }
+.stock::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.stock.in { color: var(--green); }
+.stock.low { color: var(--rust); }
+.stock.pre { color: var(--blue); }
+.stock.pre::before { border-radius: 1px; transform: rotate(45deg); }
+.stock.out { color: var(--ink-muted); }
+.stock.out::before { background: transparent; border: 1.5px solid currentColor; }
+
+/* Parcel */
+.parcel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.parcel .slot { aspect-ratio: 4 / 3; }
+.parcel ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 14px; }
+.parcel li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; }
+.parcel li::before { content: "✦"; color: var(--gold); font-size: 1.05rem; line-height: 1.5; -webkit-text-stroke: 0.5px var(--brand-ink); }
+@media (max-width: 820px) { .parcel { grid-template-columns: 1fr; gap: 28px; } }
+
+/* Promise */
+.promise { background: var(--blue); color: #fff; }
+.promise .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 48px; align-items: start; }
+.promise h2 { font-size: var(--step-3); }
+.promise p { font-size: 1.125rem; max-width: 52ch; }
+.promise .sub { margin-top: 16px; opacity: 0.85; font-size: 1rem; }
+.promise a { color: var(--gold); }
+@media (max-width: 820px) { .promise .wrap { grid-template-columns: 1fr; gap: 16px; } }
+
+/* Art pull: the one authored moment */
+.pull-demo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: center; }
+.order-note { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-md); padding: 24px; display: grid; gap: 10px; max-width: 520px; }
+.order-note .code { font-size: 0.8125rem; }
+.pull { display: block; width: 220px; aspect-ratio: 63 / 88; perspective: 1200px; border: 0; padding: 0; background: none; cursor: pointer; font: inherit; justify-self: center; }
+.pull-inner { display: block; position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 650ms cubic-bezier(.2, .7, .2, 1); }
+.pull[aria-pressed="true"] .pull-inner { transform: rotateY(180deg); }
+.pull-face { position: absolute; inset: 0; border-radius: var(--r-lg); backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-items: center; box-shadow: 0 16px 34px -20px rgba(27, 36, 64, 0.55); }
+.pull-back { background: var(--blue); border: 6px solid var(--card); }
+.pull-icon { width: 96px; height: 96px; }
+.pull-front { transform: rotateY(180deg); background: var(--card); border: 6px solid var(--card); }
+.pull-front .slot { width: 100%; height: 100%; border-radius: 8px; }
+.pull-hint { margin-top: 12px; text-align: center; font-size: var(--step--1); color: var(--ink-muted); }
+@media (prefers-reduced-motion: reduce) {
+  .pull-inner { transition: none; }
+}
+@media (max-width: 720px) { .pull-demo { grid-template-columns: 1fr; gap: 28px; } }
+
+/* People */
+.people { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.people .slot { aspect-ratio: 3 / 2; }
+.people-copy { display: grid; gap: 16px; max-width: 56ch; }
+.artist-call { margin-top: 8px; padding: 20px; border-radius: var(--r-md); background: var(--gold-tint); display: grid; gap: 8px; }
+.artist-call h3 { font-size: var(--step-1); }
+@media (max-width: 820px) { .people { grid-template-columns: 1fr; gap: 28px; } }
+
+footer { background: var(--ink); color: #E7EAF3; padding-block: 48px; }
+footer .wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; }
+footer h2 { font-size: var(--step-1); color: #fff; }
+footer p { color: #BFC6D8; max-width: 50ch; }
+footer .small { font-size: var(--step--1); display: grid; gap: 6px; align-content: start; }
+footer .fill { color: #fff; background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+@media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
+
+.legend { background: var(--gold-tint); font-size: var(--step--1); }
+.legend .wrap { padding-block: 8px; }
+</style>
+
+<div class="legend"><div class="wrap"><span class="fill">Dashed</span> boxes are real content still to add: artist artwork, photos, and details only you can confirm.</div></div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="#top" aria-label="Major Arcana Games home"><svg class="logo" role="img" aria-label="Major Arcana Games" width="379" height="161" viewBox="0 0 379 161" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.704 32.256C3.73333 30.6347 6.69867 29.824 9.6 29.824C12.544 29.824 15.232 30.4427 17.664 31.68C22.528 34.1973 26.688 38.3147 30.144 44.032L41.6 62.656L60.608 34.304H61.184L68.416 71.744C69.8667 79.424 72.0213 84.7573 74.88 87.744C77.1413 90.0907 80.0213 91.264 83.52 91.264C83.8187 91.264 84.1387 91.264 84.48 91.264V91.904C81.8347 93.0133 79.0827 93.568 76.224 93.568C70.5493 93.568 65.6213 91.3493 61.44 86.912C57.9413 83.2427 55.488 78.0587 54.08 71.36L51.136 57.856L40.192 74.112C39.4667 75.136 38.8267 76.3733 38.272 77.824C37.7173 79.2747 37.4613 80.512 37.504 81.536H36.928L21.376 54.912L18.176 76.416V76.672C18.176 77.3547 18.4107 77.9947 18.88 78.592C19.392 79.1467 19.9893 79.424 20.672 79.424H21.632V80H7.616V79.36H8.64C9.792 79.36 10.7947 79.0187 11.648 78.336C12.544 77.6107 13.0987 76.6507 13.312 75.456L17.728 48C15.552 44.2027 13.1413 40.832 10.496 37.888C7.46667 34.56 4.43733 32.896 1.408 32.896C1.23733 32.896 1.06667 32.896 0.895999 32.896L0.704 32.256ZM94.0265 33.664L116.171 79.616H100.811L88.4585 50.048L94.0265 33.664ZM80.2665 75.328C79.8825 76.1813 79.7972 76.9067 80.0105 77.504C80.2238 78.1013 80.5865 78.5707 81.0985 78.912C81.6532 79.2107 82.1865 79.36 82.6985 79.36H83.2745V80H69.0025V79.36C69.0025 79.36 69.1092 79.36 69.3225 79.36C69.4932 79.36 69.5785 79.36 69.5785 79.36C70.5598 79.36 71.5625 79.0613 72.5865 78.464C73.6532 77.824 74.5278 76.7787 75.2105 75.328H80.2665ZM94.0265 33.664V43.648L78.2825 79.808H73.0985L89.8025 43.2C90.0158 42.816 90.2932 42.2187 90.6345 41.408C91.0185 40.5547 91.4025 39.6373 91.7865 38.656C92.2132 37.6747 92.5758 36.736 92.8745 35.84C93.2158 34.944 93.4078 34.2187 93.4505 33.664H94.0265ZM99.2745 66.176V69.376H81.1625V66.176H99.2745ZM98.9545 75.328H114.059C114.784 76.7787 115.659 77.824 116.683 78.464C117.707 79.0613 118.709 79.36 119.691 79.36C119.691 79.36 119.776 79.36 119.947 79.36C120.117 79.36 120.203 79.36 120.203 79.36V80H95.9465V79.36H96.5225C97.3758 79.36 98.1225 79.0187 98.7625 78.336C99.4452 77.6107 99.5092 76.608 98.9545 75.328ZM137.913 35.2V76.8C137.913 79.5307 137.337 81.9413 136.185 84.032C135.033 86.1653 133.476 87.936 131.513 89.344C129.55 90.7947 127.332 91.8187 124.857 92.416C122.425 93.0133 119.908 93.1413 117.305 92.8V92.224C119.353 91.2853 120.91 89.984 121.977 88.32C123.086 86.656 123.833 84.8 124.217 82.752C124.601 80.704 124.793 78.656 124.793 76.608V35.2H137.913ZM124.985 39.872H124.793C124.75 38.7627 124.324 37.824 123.513 37.056C122.745 36.2453 121.806 35.84 120.697 35.84C120.697 35.84 120.548 35.84 120.249 35.84C119.993 35.84 119.865 35.84 119.865 35.84V35.2H124.985V39.872ZM137.721 39.872V35.2H142.841V35.84C142.841 35.84 142.692 35.84 142.393 35.84C142.137 35.84 142.009 35.84 142.009 35.84C140.9 35.84 139.94 36.2453 139.129 37.056C138.361 37.824 137.956 38.7627 137.913 39.872H137.721ZM172.3 34.304C177.804 34.304 182.54 35.2427 186.508 37.12C190.519 38.9547 193.591 41.6 195.724 45.056C197.857 48.512 198.924 52.6933 198.924 57.6C198.924 62.464 197.857 66.6453 195.724 70.144C193.591 73.6 190.519 76.2667 186.508 78.144C182.54 79.9787 177.804 80.896 172.3 80.896C166.796 80.896 162.06 79.9787 158.092 78.144C154.124 76.2667 151.073 73.6 148.94 70.144C146.807 66.688 145.74 62.5067 145.74 57.6C145.74 52.736 146.807 48.576 148.94 45.12C151.073 41.6213 154.124 38.9547 158.092 37.12C162.06 35.2427 166.796 34.304 172.3 34.304ZM172.3 77.696C174.945 77.696 177.185 76.9067 179.02 75.328C180.897 73.7067 182.327 71.4027 183.308 68.416C184.289 65.4293 184.78 61.824 184.78 57.6C184.78 53.376 184.289 49.7707 183.308 46.784C182.327 43.7973 180.897 41.5147 179.02 39.936C177.185 38.3147 174.945 37.504 172.3 37.504C169.697 37.504 167.457 38.3147 165.58 39.936C163.745 41.5147 162.337 43.7973 161.356 46.784C160.375 49.7707 159.884 53.376 159.884 57.6C159.884 61.824 160.375 65.4293 161.356 68.416C162.337 71.4027 163.745 73.7067 165.58 75.328C167.457 76.9067 169.697 77.696 172.3 77.696ZM219.708 35.2H227.452C229.372 35.2 231.334 35.3707 233.34 35.712C235.345 36.0533 237.18 36.672 238.844 37.568C240.508 38.4213 241.852 39.6373 242.876 41.216C243.9 42.7947 244.412 44.8213 244.412 47.296C244.412 48.9173 244.113 50.6027 243.516 52.352C242.918 54.0587 241.873 55.5733 240.38 56.896C238.929 58.176 236.86 59.0293 234.172 59.456C235.964 59.968 237.521 60.8427 238.844 62.08C240.166 63.3173 241.212 64.576 241.98 65.856C242.065 65.984 242.278 66.3467 242.62 66.944C242.961 67.5413 243.388 68.288 243.9 69.184C244.454 70.0373 245.03 70.9333 245.628 71.872C246.225 72.8107 246.822 73.6853 247.42 74.496C248.401 75.8187 249.254 76.8213 249.98 77.504C250.705 78.1867 251.43 78.656 252.156 78.912C252.924 79.168 253.82 79.3173 254.844 79.36V80H246.844C244.284 80 241.916 79.8507 239.74 79.552C237.564 79.2533 235.601 78.592 233.852 77.568C232.145 76.544 230.63 74.9227 229.308 72.704C228.838 71.936 228.454 71.168 228.156 70.4C227.857 69.632 227.601 68.8853 227.388 68.16C227.174 67.4347 226.982 66.752 226.812 66.112C226.684 65.4293 226.556 64.7893 226.428 64.192C226.3 63.552 226.15 62.9547 225.98 62.4C225.553 60.864 225.041 59.8187 224.444 59.264C223.846 58.7093 223.249 58.3253 222.652 58.112V57.472C222.822 57.472 223.014 57.472 223.228 57.472C223.441 57.472 223.59 57.472 223.676 57.472C224.87 57.472 225.937 57.1947 226.876 56.64C227.814 56.0853 228.604 55.232 229.244 54.08C229.884 52.928 230.31 51.4347 230.524 49.6C230.566 49.2587 230.609 48.896 230.652 48.512C230.694 48.0853 230.694 47.5733 230.652 46.976C230.481 43.8187 229.692 41.6213 228.284 40.384C226.918 39.1467 225.276 38.528 223.356 38.528C223.142 38.528 222.865 38.528 222.524 38.528C222.182 38.528 221.82 38.528 221.436 38.528C221.052 38.528 220.689 38.528 220.348 38.528C220.348 38.528 220.284 38.2507 220.156 37.696C220.07 37.1413 219.964 36.5867 219.836 36.032C219.75 35.4773 219.708 35.2 219.708 35.2ZM220.54 35.2V80H207.356V35.2H220.54ZM207.548 75.328V80H202.428V79.36C202.513 79.36 202.662 79.36 202.876 79.36C203.089 79.36 203.217 79.36 203.26 79.36C204.369 79.36 205.308 78.976 206.076 78.208C206.886 77.3973 207.313 76.4373 207.356 75.328H207.548ZM207.548 39.872H207.356C207.313 38.7627 206.886 37.824 206.076 37.056C205.308 36.2453 204.369 35.84 203.26 35.84C203.217 35.84 203.089 35.84 202.876 35.84C202.662 35.84 202.513 35.84 202.428 35.84V35.2H207.548V39.872ZM220.348 75.328H220.54C220.54 76.4373 220.945 77.3973 221.756 78.208C222.566 78.976 223.526 79.36 224.636 79.36C224.721 79.36 224.849 79.36 225.02 79.36C225.233 79.36 225.361 79.36 225.404 79.36V80H220.348V75.328Z" fill="#222222"/>
+<path d="M144.592 147.944C141.307 149.864 137.957 150.824 134.544 150.824C131.131 150.824 127.888 150.184 124.816 148.904C121.787 147.624 118.8 145.384 115.856 142.184C112.955 139.027 110.565 135.165 108.688 130.6L106.96 126.376H93.264L90.704 132.328C90.4907 132.883 90.384 133.331 90.384 133.672C90.384 134.013 90.448 134.397 90.576 134.824C90.7467 135.208 91.0667 135.571 91.536 135.912C92.048 136.211 92.5813 136.36 93.136 136.36H93.712V137H79.44V136.36H80.016C80.9973 136.36 81.9573 136.083 82.896 135.528C83.8773 134.931 84.688 134.056 85.328 132.904L98.384 104.232C97.104 100.691 96.0373 98.3227 95.184 97.128C94.3733 95.8907 93.6907 94.952 93.136 94.312C92.112 93.1173 90.832 92.2427 89.296 91.688C88.6987 91.4747 87.9947 91.368 87.184 91.368C86.3733 91.368 85.456 91.56 84.432 91.944L84.304 91.304C87.7173 89.2987 90.9813 88.296 94.096 88.296C98.704 88.296 102.864 90.5573 106.576 95.08C108.453 97.4267 110.139 100.264 111.632 103.592L121.872 127.08C123.749 131.389 125.136 134.291 126.032 135.784C126.928 137.235 127.717 138.472 128.4 139.496C129.125 140.563 129.829 141.48 130.512 142.248C131.195 143.016 131.941 143.763 132.752 144.488C134.16 145.768 135.931 146.728 138.064 147.368C138.96 147.667 139.941 147.816 141.008 147.816C142.117 147.816 143.269 147.645 144.464 147.304L144.592 147.944ZM94.672 123.176H105.68L101.648 113.256C101.307 112.488 100.901 111.4 100.432 109.992L94.672 123.176ZM146.458 92.2H154.202C156.122 92.2 158.084 92.3707 160.09 92.712C162.095 93.0533 163.93 93.672 165.594 94.568C167.258 95.4213 168.602 96.6373 169.626 98.216C170.65 99.7947 171.162 101.821 171.162 104.296C171.162 105.917 170.863 107.603 170.266 109.352C169.668 111.059 168.623 112.573 167.13 113.896C165.679 115.176 163.61 116.029 160.922 116.456C162.714 116.968 164.271 117.843 165.594 119.08C166.916 120.317 167.962 121.576 168.73 122.856C168.815 122.984 169.028 123.347 169.37 123.944C169.711 124.541 170.138 125.288 170.65 126.184C171.204 127.037 171.78 127.933 172.378 128.872C172.975 129.811 173.572 130.685 174.17 131.496C175.151 132.819 176.004 133.821 176.73 134.504C177.455 135.187 178.18 135.656 178.906 135.912C179.674 136.168 180.57 136.317 181.594 136.36V137H173.594C171.034 137 168.666 136.851 166.49 136.552C164.314 136.253 162.351 135.592 160.602 134.568C158.895 133.544 157.38 131.923 156.058 129.704C155.588 128.936 155.204 128.168 154.906 127.4C154.607 126.632 154.351 125.885 154.138 125.16C153.924 124.435 153.732 123.752 153.562 123.112C153.434 122.429 153.306 121.789 153.178 121.192C153.05 120.552 152.9 119.955 152.73 119.4C152.303 117.864 151.791 116.819 151.194 116.264C150.596 115.709 149.999 115.325 149.402 115.112V114.472C149.572 114.472 149.764 114.472 149.978 114.472C150.191 114.472 150.34 114.472 150.426 114.472C151.62 114.472 152.687 114.195 153.626 113.64C154.564 113.085 155.354 112.232 155.994 111.08C156.634 109.928 157.06 108.435 157.274 106.6C157.316 106.259 157.359 105.896 157.402 105.512C157.444 105.085 157.444 104.573 157.402 103.976C157.231 100.819 156.442 98.6213 155.034 97.384C153.668 96.1467 152.026 95.528 150.106 95.528C149.892 95.528 149.615 95.528 149.274 95.528C148.932 95.528 148.57 95.528 148.186 95.528C147.802 95.528 147.439 95.528 147.098 95.528C147.098 95.528 147.034 95.2507 146.906 94.696C146.82 94.1413 146.714 93.5867 146.586 93.032C146.5 92.4773 146.458 92.2 146.458 92.2ZM147.29 92.2V137H134.106V92.2H147.29ZM134.298 132.328V137H129.178V136.36C129.263 136.36 129.412 136.36 129.626 136.36C129.839 136.36 129.967 136.36 130.01 136.36C131.119 136.36 132.058 135.976 132.826 135.208C133.636 134.397 134.063 133.437 134.106 132.328H134.298ZM134.298 96.872H134.106C134.063 95.7627 133.636 94.824 132.826 94.056C132.058 93.2453 131.119 92.84 130.01 92.84C129.967 92.84 129.839 92.84 129.626 92.84C129.412 92.84 129.263 92.84 129.178 92.84V92.2H134.298V96.872ZM147.098 132.328H147.29C147.29 133.437 147.695 134.397 148.506 135.208C149.316 135.976 150.276 136.36 151.386 136.36C151.471 136.36 151.599 136.36 151.77 136.36C151.983 136.36 152.111 136.36 152.154 136.36V137H147.098V132.328ZM223.094 118.312L224.63 129.96C223.776 131.368 222.582 132.669 221.046 133.864C219.552 135.059 217.611 136.04 215.222 136.808C212.875 137.533 210.016 137.896 206.646 137.896C200.928 137.853 195.958 136.936 191.734 135.144C187.552 133.309 184.331 130.664 182.07 127.208C179.808 123.752 178.678 119.528 178.678 114.536C178.678 109.672 179.787 105.512 182.006 102.056C184.224 98.5573 187.424 95.8907 191.606 94.056C195.787 92.2213 200.822 91.304 206.71 91.304C210.294 91.304 213.472 91.6027 216.246 92.2C219.062 92.7973 221.366 93.48 223.158 94.248L222.518 106.472H221.942C220.662 101.949 218.806 98.8347 216.374 97.128C213.942 95.3787 211.083 94.504 207.798 94.504C204.64 94.504 201.931 95.2933 199.67 96.872C197.451 98.4507 195.744 100.712 194.55 103.656C193.355 106.6 192.758 110.163 192.758 114.344C192.758 118.525 193.312 122.131 194.422 125.16C195.531 128.147 197.11 130.472 199.158 132.136C201.248 133.757 203.744 134.611 206.646 134.696C210.102 134.696 212.854 134.184 214.902 133.16C216.95 132.136 218.55 130.429 219.702 128.04C220.854 125.608 221.814 122.365 222.582 118.312H223.094ZM249.652 90.664L271.796 136.616H256.436L244.083 107.048L249.652 90.664ZM235.892 132.328C235.508 133.181 235.422 133.907 235.635 134.504C235.849 135.101 236.212 135.571 236.724 135.912C237.278 136.211 237.812 136.36 238.324 136.36H238.9V137H224.627V136.36C224.627 136.36 224.734 136.36 224.947 136.36C225.118 136.36 225.203 136.36 225.203 136.36C226.185 136.36 227.188 136.061 228.212 135.464C229.278 134.824 230.153 133.779 230.836 132.328H235.892ZM249.652 90.664V100.648L233.908 136.808H228.724L245.428 100.2C245.641 99.816 245.918 99.2187 246.26 98.408C246.644 97.5547 247.028 96.6373 247.412 95.656C247.838 94.6747 248.201 93.736 248.5 92.84C248.841 91.944 249.033 91.2187 249.076 90.664H249.652ZM254.9 123.176V126.376H236.788V123.176H254.9ZM254.58 132.328H269.684C270.409 133.779 271.284 134.824 272.308 135.464C273.332 136.061 274.334 136.36 275.316 136.36C275.316 136.36 275.401 136.36 275.572 136.36C275.742 136.36 275.828 136.36 275.828 136.36V137H251.572V136.36H252.148C253.001 136.36 253.748 136.019 254.388 135.336C255.07 134.611 255.134 133.608 254.58 132.328ZM279.458 91.24L322.658 129.64L323.49 137.896L280.29 99.56L279.458 91.24ZM279.842 132.456V137H274.53V136.36C274.53 136.36 274.722 136.36 275.106 136.36C275.49 136.36 275.703 136.36 275.746 136.36C276.813 136.36 277.73 135.976 278.498 135.208C279.266 134.44 279.65 133.523 279.65 132.456H279.842ZM292.834 132.456C292.834 133.523 293.218 134.44 293.986 135.208C294.754 135.976 295.671 136.36 296.738 136.36C296.781 136.36 296.994 136.36 297.378 136.36C297.762 136.36 297.954 136.36 297.954 136.36V137H292.642V132.456H292.834ZM279.458 91.24L292.77 105.064L292.834 137H279.65V99.24C279.65 96.7227 279.501 94.76 279.202 93.352C278.946 91.944 278.818 91.24 278.818 91.24H279.458ZM323.234 92.2V129.704C323.234 131.453 323.298 132.947 323.426 134.184C323.597 135.421 323.746 136.36 323.874 137C324.002 137.597 324.066 137.896 324.066 137.896H323.49L310.114 123.048V92.2H323.234ZM328.354 92.2V92.84C328.354 92.84 328.162 92.84 327.778 92.84C327.394 92.84 327.202 92.84 327.202 92.84C326.135 92.84 325.218 93.224 324.45 93.992C323.682 94.7173 323.277 95.6347 323.234 96.744H323.042V92.2H328.354ZM304.93 92.2H310.242V96.744H310.114C310.071 95.6347 309.666 94.7173 308.898 93.992C308.173 93.224 307.255 92.84 306.146 92.84C306.146 92.84 305.954 92.84 305.57 92.84C305.186 92.84 304.973 92.84 304.93 92.84V92.2ZM352.089 90.664L374.233 136.616H358.873L346.521 107.048L352.089 90.664ZM338.329 132.328C337.945 133.181 337.86 133.907 338.073 134.504C338.286 135.101 338.649 135.571 339.161 135.912C339.716 136.211 340.249 136.36 340.761 136.36H341.337V137H327.065V136.36C327.065 136.36 327.172 136.36 327.385 136.36C327.556 136.36 327.641 136.36 327.641 136.36C328.622 136.36 329.625 136.061 330.649 135.464C331.716 134.824 332.59 133.779 333.273 132.328H338.329ZM352.089 90.664V100.648L336.345 136.808H331.161L347.865 100.2C348.078 99.816 348.356 99.2187 348.697 98.408C349.081 97.5547 349.465 96.6373 349.849 95.656C350.276 94.6747 350.638 93.736 350.937 92.84C351.278 91.944 351.47 91.2187 351.513 90.664H352.089ZM357.337 123.176V126.376H339.225V123.176H357.337ZM357.017 132.328H372.121C372.846 133.779 373.721 134.824 374.745 135.464C375.769 136.061 376.772 136.36 377.753 136.36C377.753 136.36 377.838 136.36 378.009 136.36C378.18 136.36 378.265 136.36 378.265 136.36V137H354.009V136.36H354.585C355.438 136.36 356.185 136.019 356.825 135.336C357.508 134.611 357.572 133.608 357.017 132.328Z" fill="#222222"/>
+<g clip-path="url(#clip0_78_27)">
+<path d="M290.92 14.5878C291.979 14.2761 292.69 13.9511 293.739 13.9921C296.536 14.1017 298.94 15.6083 299.902 18.4715L316.086 61.4969C316.414 62.2162 316.381 63.2747 316.709 63.994C316.622 66.8166 315.147 69.2318 312.317 70.1808L286.118 79.7527C285.048 80.4173 284.347 80.3899 283.298 80.3488C280.501 80.2392 278.097 78.7319 277.135 75.8684L260.952 32.8436C259.312 29.2469 261.179 25.434 264.719 24.1595L290.92 14.5878ZM329.176 22.7972C332.629 24.3455 334.249 28.649 332.742 32.1225L323.711 52.611L324.697 20.5034L329.176 22.7972ZM272.335 38.5388C271.312 38.9115 270.37 39.5816 269.512 40.5495L269.663 40.7533C269.723 40.7315 269.784 40.7094 269.844 40.6875C270.913 40.2985 272.199 40.5045 273.7 41.3041C275.017 42.016 276.307 42.9109 277.568 43.9878L279.579 54.3624C279.659 54.8161 279.588 55.2306 279.367 55.6045C279.154 55.958 278.843 56.2098 278.437 56.3578L278.076 56.489L278.159 56.7175L283.106 54.916L283.031 54.7114L282.693 54.8346C282.452 54.9221 282.205 54.8995 281.952 54.7674C281.709 54.6145 281.544 54.4156 281.455 54.1721L281.42 54.0798L279.754 45.9877L288.704 53.5011L288.907 53.4269C288.759 53.0668 288.688 52.5913 288.695 52.0024C288.703 51.4131 288.768 50.8884 288.891 50.4295L290.64 43.2167L293.435 47.6628C294.802 49.8744 296.343 51.4106 298.054 52.2719C300.107 53.3197 302.134 53.4803 304.137 52.7516C305.146 52.3844 306.046 51.8322 306.835 51.0962L306.751 50.8671L306.413 50.9909C305.178 51.4404 304.008 51.3909 302.905 50.843C301.508 50.1432 300.055 48.5143 298.544 45.9578L291.123 33.512L290.921 33.5867L287.898 46.156L281.433 40.9745C279.47 39.3763 277.467 38.4388 275.423 38.1644C274.404 38.0348 273.374 38.1608 272.335 38.5388ZM311.233 14.3235C315.079 14.4743 318.129 17.7728 318.01 21.6537L317.315 44.2358L305.988 14.1177L311.233 14.3235ZM291.949 20.143C291.877 20.1693 291.815 20.2173 291.771 20.2807C291.727 20.3443 291.703 20.4206 291.703 20.4985L291.705 21.5546C291.707 22.3824 291.53 23.1991 291.186 23.9479C290.842 24.6968 290.34 25.3596 289.715 25.8905L288.918 26.5681C288.859 26.618 288.816 26.6847 288.797 26.7599C288.777 26.835 288.781 26.9144 288.808 26.9876C288.834 27.061 288.882 27.1252 288.946 27.1701C289.009 27.215 289.085 27.2387 289.162 27.239L290.208 27.2459C291.028 27.2507 291.839 27.4356 292.584 27.7884C293.328 28.1411 293.989 28.6527 294.52 29.2878L295.197 30.0973C295.247 30.1572 295.314 30.2004 295.389 30.2209C295.463 30.2412 295.542 30.2378 295.614 30.2116C295.686 30.1853 295.749 30.1372 295.793 30.0736C295.837 30.0099 295.861 29.9337 295.861 29.8558L295.859 28.8005C295.857 27.9728 296.035 27.1561 296.378 26.4073C296.722 25.6586 297.224 24.9958 297.849 24.465L298.645 23.7874C298.704 23.7375 298.747 23.6708 298.767 23.5956C298.787 23.5204 298.782 23.4403 298.755 23.367C298.729 23.2938 298.681 23.2302 298.618 23.1854C298.554 23.1405 298.478 23.1168 298.401 23.1165L297.355 23.1096C296.535 23.1047 295.725 22.9194 294.981 22.5668C294.236 22.2141 293.575 21.7024 293.044 21.0673L292.367 20.257C292.317 20.1971 292.25 20.1539 292.175 20.1334C292.101 20.113 292.022 20.1166 291.949 20.143Z" fill="#F9BB59"/>
+</g>
+<defs>
+<clipPath id="clip0_78_27">
+<rect width="85" height="85" fill="white" transform="translate(259)"/>
+</clipPath>
+</defs>
+</svg></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#artists">Artists</a>
+      <a href="#promise">Condition guide</a>
+      <a href="#people">About us</a>
+    </nav>
+    <button class="cart" type="button" id="cart-btn">Cart <span id="cart-count">0</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <figure class="art-frame" style="margin: 0">
+        <div class="slot"><span><b>This month's artist artwork</b>Portrait 4:5. Their art card design, shown big.</span></div>
+        <figcaption class="art-credit">
+          <span>Art card by <span class="fill">Featured artist</span></span>
+          <a class="link-arrow" href="#artists">Meet the artist →</a>
+        </figcaption>
+      </figure>
+      <div>
+        <h1 id="hero-title">Every order comes with a little art.</h1>
+        <p class="hero-copy">Japanese Pokémon and One Piece cards and booster boxes, Near Mint or better. Each parcel comes with a sticker and a hand-drawn art card from a local artist.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#shop">Shop new arrivals</a>
+          <a class="link-arrow" href="#parcel">What's in the parcel →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="shop" aria-labelledby="shop-title">
+    <div class="wrap">
+      <div class="band-head">
+        <h2 id="shop-title">New arrivals</h2>
+        <a class="link-arrow" href="#shop">See everything →</a>
+      </div>
+      <ul class="products" id="products"></ul>
+    </div>
+  </section>
+
+  <section class="band" id="parcel" aria-labelledby="parcel-title">
+    <div class="wrap parcel">
+      <div class="slot"><span><b>Photo of a packed order</b>Your real packaging, sticker and art card, on your desk.</span></div>
+      <div>
+        <h2 id="parcel-title">What arrives in your letterbox</h2>
+        <ul>
+          <li><span><b>Your cards, packed properly.</b> Secure, neat packaging. No crumpled envelopes.</span></li>
+          <li><span><b>A free sticker,</b> because mail day should feel like mail day.</span></li>
+          <li><span><b>A hand-drawn art card</b> by this month's artist. Which one you get is a surprise, like a pull.</span></li>
+          <li><span><b>Dispatched within</b> <span class="fill">your dispatch time</span>, with reliable postage.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band promise" id="promise" aria-labelledby="promise-title">
+    <div class="wrap">
+      <h2 id="promise-title">Near Mint, or we tell you.</h2>
+      <div>
+        <p>We only sell cards and product we'd grade Near Mint or better. If we ever list something below that, the listing will say so clearly. So far, we never have.</p>
+        <p class="sub">Not sure what Near Mint means at our shop? <a href="#promise">See our condition guide</a> with example photos.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="artists" aria-labelledby="pull-title">
+    <div class="wrap pull-demo">
+      <div class="order-note">
+        <span class="code">Order confirmation</span>
+        <h2 id="pull-title">Thanks! Your order's on its way to being packed.</h2>
+        <p class="muted">There's an art card in your parcel. Turn yours over to see who drew it.</p>
+      </div>
+      <div>
+        <button class="pull" type="button" id="pull" aria-pressed="false" aria-label="Turn over your art card">
+          <span class="pull-inner">
+            <span class="pull-face pull-back"><svg class="pull-icon" aria-hidden="true" width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_25_581)">
+<rect width="96" height="96" rx="48" fill="white"/>
+<rect width="96" height="96" fill="#264D97"/>
+<path d="M42.1689 15.5969C43.2146 15.287 43.9158 14.9627 44.9507 15.0035C47.7113 15.1124 50.0849 16.6114 51.0346 19.4586L67.005 62.2388C67.3283 62.9539 67.2964 64.0059 67.6198 64.7209C67.5342 67.5275 66.0787 69.9285 63.2859 70.8721L37.4302 80.3905C36.3736 81.0513 35.6818 81.0229 34.6465 80.982C31.8862 80.8728 29.5137 79.3747 28.5641 76.5276L12.5931 33.749C10.9746 30.1728 12.8178 26.3807 16.3113 25.1135L42.1689 15.5969ZM79.925 23.7597C83.3329 25.2991 84.93 29.5778 83.4429 33.0314L74.5299 53.4037L75.5034 21.4771L79.925 23.7597ZM23.8273 39.4112C22.8173 39.7819 21.8892 40.4493 21.0424 41.4116L21.1904 41.6131C21.2495 41.5914 21.309 41.5683 21.368 41.5467C22.423 41.1599 23.6932 41.3655 25.1751 42.1604C26.4742 42.8682 27.7463 43.7587 28.9914 44.8295L30.9766 55.1439C31.0555 55.5952 30.9862 56.0078 30.7674 56.3797C30.5579 56.7309 30.251 56.9802 29.85 57.1273L29.493 57.2583L29.575 57.4852L34.4579 55.696L34.3837 55.4906L34.0503 55.6128C33.8128 55.6999 33.569 55.6778 33.3197 55.5466C33.0798 55.3945 32.9144 55.1973 32.8267 54.9551L32.7939 54.8643L31.1485 46.818L39.9831 54.2867L40.1829 54.2147C40.0368 53.8566 39.9687 53.3832 39.9757 52.7975C39.9828 52.2118 40.0462 51.6902 40.1673 51.234L41.8925 44.0618L44.6509 48.4809C46.0009 50.6803 47.5221 52.209 49.2115 53.0654C51.2369 54.1071 53.2375 54.2658 55.2137 53.5412C56.2091 53.1762 57.0971 52.6284 57.876 51.8968L57.7936 51.6687L57.4594 51.7925C56.2413 52.2389 55.0866 52.1899 53.9982 51.6456C52.6194 50.9498 51.1829 49.33 49.6923 46.7878L42.371 34.413L42.1705 34.4865L39.1872 46.9852L32.8079 41.8327C30.871 40.2439 28.8934 39.3127 26.8767 39.0396C25.8709 38.9108 24.8528 39.0352 23.8273 39.4112ZM62.2166 15.3339C66.0123 15.4839 69.0225 18.7644 68.9048 22.6232L68.22 45.0748L57.0396 15.1299L62.2166 15.3339ZM43.1847 21.1202C43.1132 21.1464 43.0511 21.195 43.0076 21.2584C42.9643 21.3216 42.9411 21.3968 42.9414 21.4741L42.9434 22.5246C42.9449 23.3475 42.7696 24.1592 42.4304 24.9037C42.0912 25.6483 41.5961 26.3075 40.9791 26.8353L40.192 27.5094C40.1341 27.5589 40.0926 27.6251 40.0732 27.6995C40.0537 27.7743 40.0575 27.854 40.0839 27.9269C40.1102 27.9997 40.1578 28.0623 40.2203 28.1069C40.2829 28.1515 40.3569 28.1764 40.433 28.1767L41.4656 28.1822C42.2749 28.187 43.0751 28.3715 43.8099 28.722C44.5448 29.0728 45.1972 29.582 45.7211 30.2135L46.3894 31.0183C46.4385 31.0777 46.5043 31.1203 46.5778 31.1407C46.6515 31.1611 46.7301 31.1581 46.8016 31.1319C46.873 31.1056 46.9342 31.0573 46.9776 30.9941C47.0209 30.9309 47.0441 30.8557 47.0438 30.7783L47.0423 29.729C47.0407 28.906 47.2156 28.0934 47.5548 27.3488C47.894 26.6043 48.3892 25.9449 49.0062 25.4172L49.7925 24.7446C49.8508 24.695 49.8926 24.6278 49.9121 24.553C49.9314 24.4784 49.928 24.3995 49.9018 24.3267C49.8754 24.2538 49.8276 24.1903 49.7649 24.1456C49.7023 24.101 49.6277 24.0776 49.5515 24.0774L48.5196 24.0702C47.7102 24.0655 46.9102 23.8811 46.1754 23.5304C45.4406 23.1798 44.7884 22.6715 44.2645 22.0401L43.5958 21.2342C43.5467 21.1747 43.481 21.1321 43.4075 21.1118C43.3339 21.0914 43.2562 21.0941 43.1847 21.1202Z" fill="#F9BB59"/>
+</g>
+<defs>
+<clipPath id="clip0_25_581">
+<rect width="96" height="96" rx="48" fill="white"/>
+</clipPath>
+</defs>
+</svg></span>
+            <span class="pull-face pull-front"><span class="slot"><span><b>Artist's card art</b><span class="fill">Artist name</span></span></span></span>
+          </span>
+        </button>
+        <p class="pull-hint" id="pull-hint">Tap the card to turn it over</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="people" aria-labelledby="people-title">
+    <div class="wrap people">
+      <div class="people-copy">
+        <h2 id="people-title">A small shop run by people who love the hobby</h2>
+        <p>We started Major Arcana Games to help people find the card that finishes their deck or collection, quickly and without the risk of a stranger on Marketplace.</p>
+        <p>Fair prices, accurate listings, no scalping. Everyone's welcome here: we're LGBTQIA+ friendly, judgment-free, and just as excited about your pulls as you are.</p>
+        <div class="artist-call">
+          <h3>Are you a Brisbane or Melbourne artist?</h3>
+          <p>We'd love to put your art in our parcels. Email <span class="fill">info@majorarcanagames.com.au</span> with a link to your work.</p>
+        </div>
+      </div>
+      <div class="slot"><span><b>Photo of you at the packing desk</b>A real face is the strongest trust signal you have.</span></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display: grid; gap: 10px">
+      <h2>Major Arcana Games</h2>
+      <p>Japanese Pokémon and One Piece, Near Mint or better, with a little art in every parcel. Everyone's welcome.</p>
+    </div>
+    <div class="small">
+      <span>info@majorarcanagames.com.au</span>
+      <span>Prices in AUD, GST included</span>
+      <span>ABN <span class="fill">your ABN</span></span>
+      <span>Reviews: <span class="fill">link to Google or eBay feedback</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var items = [
+    { img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlBsYWNlaG9sZGVyIGltYWdlIGZvciBNZWdhIEJyYXZlIj4KICA8cG9seWdvbiBwb2ludHM9IjEyMCwyMTAgMjIwLDEyMCA3MDAsMTIwIDYwMCwyMTAiIGZpbGw9IiNjZjY5NTkiLz4KICA8cG9seWdvbiBwb2ludHM9IjYwMCwyMTAgNzAwLDEyMCA3MDAsNDMwIDYwMCw1MjAiIGZpbGw9IiM3MzMwMjYiLz4KICA8cmVjdCB4PSIxMjAiIHk9IjIxMCIgd2lkdGg9IjQ4MCIgaGVpZ2h0PSIzMTAiIGZpbGw9IiNhNjQwMzAiLz4KICA8cmVjdCB4PSIxNDAiIHk9IjIzMCIgd2lkdGg9IjQ0MCIgaGVpZ2h0PSIyNzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMzUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjM2MCIgeT0iMzcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iOTIiIGZpbGw9IiNmZmZmZmYiPk0xTDwvdGV4dD4KICA8dGV4dCB4PSIzNjAiIHk9IjQzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjAuOSI+TWVnYSBCcmF2ZTwvdGV4dD4KICA8dGV4dCB4PSI0MDAiIHk9IjYwMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMjQiIGxldHRlci1zcGFjaW5nPSIzIiBmaWxsPSIjYTliNGNmIj5QTEFDRUhPTERFUiBJTUFHRTwvdGV4dD4KPC9zdmc+Cg==", jp: "メガブレイブ", en: "Mega Brave", code: "M1L", price: "A$124.95", stock: "pre", label: "Pre-order · 24 Oct" },
+    { img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlBsYWNlaG9sZGVyIGltYWdlIGZvciBNZWdhIFN5bXBob25pYSI+CiAgPHBvbHlnb24gcG9pbnRzPSIxMjAsMjEwIDIyMCwxMjAgNzAwLDEyMCA2MDAsMjEwIiBmaWxsPSIjNTliYmNmIi8+CiAgPHBvbHlnb24gcG9pbnRzPSI2MDAsMjEwIDcwMCwxMjAgNzAwLDQzMCA2MDAsNTIwIiBmaWxsPSIjMjY2NjczIi8+CiAgPHJlY3QgeD0iMTIwIiB5PSIyMTAiIHdpZHRoPSI0ODAiIGhlaWdodD0iMzEwIiBmaWxsPSIjMzA5MmE2Ii8+CiAgPHJlY3QgeD0iMTQwIiB5PSIyMzAiIHdpZHRoPSI0NDAiIGhlaWdodD0iMjcwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS1vcGFjaXR5PSIwLjM1IiBzdHJva2Utd2lkdGg9IjIiLz4KICA8dGV4dCB4PSIzNjAiIHk9IjM3MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXdlaWdodD0iNzAwIiBmb250LXNpemU9IjkyIiBmaWxsPSIjZmZmZmZmIj5NMVM8L3RleHQ+CiAgPHRleHQgeD0iMzYwIiB5PSI0MzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC1zaXplPSIzMCIgZmlsbD0iI2ZmZmZmZiIgZmlsbC1vcGFjaXR5PSIwLjkiPk1lZ2EgU3ltcGhvbmlhPC90ZXh0PgogIDx0ZXh0IHg9IjQwMCIgeT0iNjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgbGV0dGVyLXNwYWNpbmc9IjMiIGZpbGw9IiNhOWI0Y2YiPlBMQUNFSE9MREVSIElNQUdFPC90ZXh0Pgo8L3N2Zz4K", jp: "メガシンフォニア", en: "Mega Symphonia", code: "M1S", price: "From A$119.95", stock: "in", label: "In stock" },
+    { img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlBsYWNlaG9sZGVyIGltYWdlIGZvciBIZWF0IFdhdmUgQXJlbmEiPgogIDxwb2x5Z29uIHBvaW50cz0iMTIwLDIxMCAyMjAsMTIwIDcwMCwxMjAgNjAwLDIxMCIgZmlsbD0iI2NmODQ1OSIvPgogIDxwb2x5Z29uIHBvaW50cz0iNjAwLDIxMCA3MDAsMTIwIDcwMCw0MzAgNjAwLDUyMCIgZmlsbD0iIzczNDIyNiIvPgogIDxyZWN0IHg9IjEyMCIgeT0iMjEwIiB3aWR0aD0iNDgwIiBoZWlnaHQ9IjMxMCIgZmlsbD0iI2E2NWIzMCIvPgogIDxyZWN0IHg9IjE0MCIgeT0iMjMwIiB3aWR0aD0iNDQwIiBoZWlnaHQ9IjI3MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utb3BhY2l0eT0iMC4zNSIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPHRleHQgeD0iMzYwIiB5PSIzNzAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJHZW9yZ2lhLCBzZXJpZiIgZm9udC13ZWlnaHQ9IjcwMCIgZm9udC1zaXplPSI5MiIgZmlsbD0iI2ZmZmZmZiI+U1Y5YTwvdGV4dD4KICA8dGV4dCB4PSIzNjAiIHk9IjQzMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjMwIiBmaWxsPSIjZmZmZmZmIiBmaWxsLW9wYWNpdHk9IjAuOSI+SGVhdCBXYXZlIEFyZW5hPC90ZXh0PgogIDx0ZXh0IHg9IjQwMCIgeT0iNjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgbGV0dGVyLXNwYWNpbmc9IjMiIGZpbGw9IiNhOWI0Y2YiPlBMQUNFSE9MREVSIElNQUdFPC90ZXh0Pgo8L3N2Zz4K", jp: "熱風のアリーナ", en: "Heat Wave Arena", code: "SV9a", price: "A$99.95", stock: "low", label: "2 left" },
+    { img: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNjQwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlBsYWNlaG9sZGVyIGltYWdlIGZvciBFbXBlcm9ycyBpbiB0aGUgTmV3IFdvcmxkIj4KICA8cG9seWdvbiBwb2ludHM9IjEyMCwyMTAgMjIwLDEyMCA3MDAsMTIwIDYwMCwyMTAiIGZpbGw9IiNjZjU5NmQiLz4KICA8cG9seWdvbiBwb2ludHM9IjYwMCwyMTAgNzAwLDEyMCA3MDAsNDMwIDYwMCw1MjAiIGZpbGw9IiM3MzI2MzMiLz4KICA8cmVjdCB4PSIxMjAiIHk9IjIxMCIgd2lkdGg9IjQ4MCIgaGVpZ2h0PSIzMTAiIGZpbGw9IiNhNjMwNDQiLz4KICA8cmVjdCB4PSIxNDAiIHk9IjIzMCIgd2lkdGg9IjQ0MCIgaGVpZ2h0PSIyNzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLW9wYWNpdHk9IjAuMzUiIHN0cm9rZS13aWR0aD0iMiIvPgogIDx0ZXh0IHg9IjM2MCIgeT0iMzcwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZvbnQtc2l6ZT0iOTIiIGZpbGw9IiNmZmZmZmYiPk9QLTA5PC90ZXh0PgogIDx0ZXh0IHg9IjM2MCIgeT0iNDMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iR2VvcmdpYSwgc2VyaWYiIGZvbnQtc2l6ZT0iMzAiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC45Ij5FbXBlcm9ycyBpbiB0aGUgTmV3IFdvcmxkPC90ZXh0PgogIDx0ZXh0IHg9IjQwMCIgeT0iNjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIyNCIgbGV0dGVyLXNwYWNpbmc9IjMiIGZpbGw9IiNhOWI0Y2YiPlBMQUNFSE9MREVSIElNQUdFPC90ZXh0Pgo8L3N2Zz4K", jp: "新たなる皇帝", en: "Emperors in the New World", code: "OP-09", price: "A$189.95", stock: "in", label: "In stock" }
+  ];
+  document.getElementById("products").innerHTML = items.map(function (p) {
+    return '<li><a class="product" href="#shop">' +
+      '<span class="product-img"><img src="' + p.img + '" alt="" loading="lazy"></span>' +
+      '<span class="product-body">' +
+        '<span class="jp">' + p.jp + '</span>' +
+        '<h3>' + p.en + '</h3>' +
+        '<span class="code">' + p.code + ' · Japanese</span>' +
+        '<span class="product-meta"><span class="price">' + p.price + '</span><span class="stock ' + p.stock + '">' + p.label + '</span></span>' +
+      '</span></a></li>';
+  }).join("");
+
+  var pull = document.getElementById("pull"), hint = document.getElementById("pull-hint");
+  pull.addEventListener("click", function () {
+    var open = pull.getAttribute("aria-pressed") !== "true";
+    pull.setAttribute("aria-pressed", String(open));
+    hint.textContent = open ? "Tap again to turn it back" : "Tap the card to turn it over";
+  });
+})();
+</script>
