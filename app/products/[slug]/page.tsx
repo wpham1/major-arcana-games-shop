@@ -11,14 +11,14 @@ import { getProductBySlug } from "@/lib/products";
 
 export default function ProductPage({ params }: PageProps<"/products/[slug]">) {
   return (
-    <main className="mx-auto w-full max-w-6xl px-4 py-12">
+    <main className="mx-auto w-full max-w-[1160px] px-4 py-10 sm:py-14">
       <Link
         href="/products"
-        className="text-sm text-star-muted transition-colors hover:text-star"
+        className="text-sm font-bold text-blue hover:underline"
       >
-        &larr; All booster boxes
+        &larr; Back to the shop
       </Link>
-      <Suspense fallback={<p className="mt-6 text-star-muted">Loading…</p>}>
+      <Suspense fallback={<p className="mt-6 text-ink-muted">Loading…</p>}>
         <ProductDetails params={params} />
       </Suspense>
     </main>
@@ -33,10 +33,8 @@ async function ProductDetails({
   if (!product) notFound();
 
   return (
-    <article className="mt-8 grid items-start gap-12 md:grid-cols-[0.9fr_1.1fr]">
-      {/* Card-framed photo well. */}
-      <div className="card-face relative! aspect-[63/88] max-w-[340px] md:max-w-none">
-        <div className="relative grid flex-1 place-items-center overflow-hidden rounded-sm bg-night-sunk">
+    <article className="mt-8 grid items-start gap-10 md:grid-cols-[1.1fr_1fr] md:gap-14">
+      <div className="relative grid aspect-[5/4] place-items-center overflow-hidden rounded-md border border-line bg-image-well">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
@@ -47,30 +45,27 @@ async function ProductDetails({
               className="object-contain p-4"
             />
           ) : (
-            // No photo yet: the set code stands in, in display type.
+            // No photo yet: the set code stands in.
             product.setCode && (
-              <span className="font-display text-5xl font-extrabold text-gold/60">
+              <span className="font-mono text-4xl text-ink-muted">
                 {product.setCode}
               </span>
             )
           )}
-        </div>
       </div>
 
       <div className="grid gap-6">
         <div>
           {product.nameJa && (
-            <p className="font-display text-xl text-star-muted">
-              {product.nameJa}
-            </p>
+            <p className="text-lg text-ink-muted">{product.nameJa}</p>
           )}
-          <h1 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.15] font-extrabold">
+          <h1 className="font-display text-[clamp(2rem,4.5vw,3rem)] leading-[1.12]">
             {product.name}
           </h1>
         </div>
 
         {product.description && (
-          <p className="max-w-[65ch] text-star-muted">{product.description}</p>
+          <p className="max-w-[65ch] text-ink-muted">{product.description}</p>
         )}
 
         {/* Name and prices above are cached; stock below is read fresh on
@@ -91,9 +86,12 @@ async function ProductDetails({
           />
         </Suspense>
 
-        <p className="text-[0.9375rem] text-star-muted">
-          Near Mint or better. We&apos;d say so clearly in this listing if it
-          weren&apos;t.
+        <p className="rounded-md bg-card px-4 py-3 text-[0.9375rem]">
+          <b>Near Mint or better.</b> We&apos;d say so clearly in this listing
+          if it weren&apos;t.{" "}
+          <Link href="/condition-guide" className="text-blue underline">
+            Condition guide
+          </Link>
         </p>
 
         <table className="w-full border-collapse text-[0.9375rem]">
@@ -105,14 +103,14 @@ async function ProductDetails({
             ]
               .filter(([, value]) => value)
               .map(([label, value]) => (
-                <tr key={label} className="border-b border-rule">
+                <tr key={label} className="border-b border-line">
                   <th
                     scope="row"
-                    className="w-2/5 py-2.5 text-left font-medium text-star-muted"
+                    className="w-2/5 py-2.5 text-left font-medium text-ink-muted"
                   >
                     {label}
                   </th>
-                  <td className="py-2.5 font-mono tabular-nums">{value}</td>
+                  <td className="py-2.5">{value}</td>
                 </tr>
               ))}
           </tbody>
@@ -156,7 +154,7 @@ function VariantList({
   today: string | null;
 }) {
   return (
-    <ul className="divide-y divide-rule border-y border-rule">
+    <ul className="divide-y divide-line border-y border-line">
       {variants.map((variant) => (
         <li
           key={variant.id}
@@ -172,7 +170,7 @@ function VariantList({
               }
             />
           </div>
-          <p className="font-mono text-xl font-medium tabular-nums">
+          <p className="text-xl font-bold tabular-nums">
             {formatPrice(variant.priceCents)}
           </p>
         </li>

@@ -15,7 +15,7 @@ export function ProductGrid({
   today: string | null;
 }) {
   return (
-    <ul className="grid grid-cols-2 gap-x-3 gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] sm:gap-x-6 sm:gap-y-8">
+    <ul className="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(230px,1fr))] sm:gap-5">
       {products.map((product) => (
         <li key={product.id}>
           <ProductCard

@@ -2,41 +2,38 @@
 
 /* Tokens from DESIGN.md. Change them there first, then here. */
 @theme {
-  --color-night: #0d1630;
-  --color-night-raised: #16224a;
-  --color-night-sunk: #091024;
-  --color-brand-blue: #264d97;
+  --color-paper: #f5f7fc;
+  --color-card: #ffffff;
+  --color-image-well: #eef1f8;
+  --color-ink: #1b2440;
+  --color-ink-muted: #566079;
+  --color-blue: #264d97;
+  --color-blue-deep: #1d3c78;
   --color-gold: #f9bb59;
-  --color-gold-hover: #ffcb78;
-  --color-gold-faint: rgb(249 187 89 / 0.3);
-  --color-on-gold: #222222;
-  --color-star: #f6f1e7;
-  --color-star-muted: #a9b4cf;
-  --color-jade: #6fcb9a;
-  --color-coral: #ff8f70;
-  --color-sky: #9db8f2;
-  --color-rule: rgb(246 241 231 / 0.12);
+  --color-gold-tint: #fef1d9;
+  --color-brand-ink: #222222;
+  --color-green: #1e7a4c;
+  --color-rust: #b23f1c;
+  --color-line: rgb(27 36 64 / 0.12);
 
-  --font-display: var(--font-shippori), "Hiragino Mincho ProN", "Yu Mincho",
-    Georgia, serif;
+  --font-display: var(--font-young-serif), Georgia, "Times New Roman", serif;
   --font-sans: var(--font-zen-kaku), "Hiragino Sans", "Yu Gothic", "Segoe UI",
     sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SFMono-Regular", Menlo,
     monospace;
 
-  --radius-sm: 3px;
-  --radius-md: 6px;
-
-  --ease-card: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background: var(--color-night);
-  color: var(--color-star);
+  background: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   line-height: 1.6;
 }
@@ -48,89 +45,22 @@ h3 {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-gold);
+  outline: 3px solid var(--color-gold);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
-/* ---------- Product card (DESIGN.md > Components > Product tile) ----------
-   Trading-card proportion with a gold frame. Hover or keyboard focus turns
-   it over to show the box contents. Touch devices don't flip: the back stays
-   hidden and .card-touch-details shows on the front instead. */
-
-.card {
-  display: block;
-  perspective: 1400px;
+/* Sparkle bullets: the logo's four-point star. */
+.sparkle-list > li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 10px;
 }
 
-.card-inner {
-  position: relative;
-  aspect-ratio: 63 / 88;
-  transform-style: preserve-3d;
-  transition: transform 520ms var(--ease-card);
-}
-
-.card-face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 7px;
-  border: 1px solid var(--color-gold-faint);
-  border-radius: var(--radius-md);
-  background: var(--color-night-raised);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.03),
-    0 10px 24px -14px rgb(0 0 0 / 0.8);
-  backface-visibility: hidden;
-}
-
-/* Inner gold rule: the card frame. */
-.card-face::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px solid var(--color-gold-faint);
-  border-radius: var(--radius-sm);
-  pointer-events: none;
-}
-
-.card-back {
-  transform: rotateY(180deg);
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .card:hover .card-inner,
-  .card:focus-visible .card-inner {
-    transform: rotateY(180deg);
-  }
-}
-
-@media (hover: hover) and (prefers-reduced-motion: reduce) {
-  .card-back {
-    transform: none;
-    opacity: 0;
-    transition: opacity 150ms linear;
-  }
-  .card:hover .card-back,
-  .card:focus-visible .card-back {
-    opacity: 1;
-  }
-}
-
-.card-touch-details {
-  display: none;
-}
-
-@media (hover: none) {
-  .card-back {
-    display: none;
-  }
-  .card-touch-details {
-    display: block;
-  }
-}
-
-/* Sold out: dim the photo well and title, keep price and state readable. */
-.card[data-availability="sold-out"] :is(.card-photo, .card-title) {
-  opacity: 0.55;
+.sparkle-list > li::before {
+  content: "✦";
+  color: var(--color-gold);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  -webkit-text-stroke: 0.5px var(--color-brand-ink);
 }

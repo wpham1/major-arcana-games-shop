@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {
   JetBrains_Mono,
-  Shippori_Mincho_B1,
+  Young_Serif,
   Zen_Kaku_Gothic_New,
 } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
@@ -9,10 +9,11 @@ import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
 // Fonts from DESIGN.md > Typography. Only Latin is preloaded; Japanese
-// glyphs load on demand through the unicode-range subsets Google serves.
-const shippori = Shippori_Mincho_B1({
-  variable: "--font-shippori",
-  weight: ["500", "700", "800"],
+// glyphs in Zen Kaku Gothic New load on demand through Google's
+// unicode-range subsets.
+const youngSerif = Young_Serif({
+  variable: "--font-young-serif",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -24,7 +25,7 @@ const zenKaku = Zen_Kaku_Gothic_New({
 
 const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
-  weight: ["400", "500"],
+  weight: "500",
   subsets: ["latin"],
 });
 
@@ -41,7 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${shippori.variable} ${zenKaku.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${youngSerif.variable} ${zenKaku.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <SiteHeader />

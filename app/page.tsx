@@ -1,122 +1,187 @@
+import Image from "next/image";
 import Link from "next/link";
-import { connection } from "next/server";
 import { Suspense } from "react";
-import { ProductCard } from "@/components/product-card";
-import { getProductAvailability, todayInJapan } from "@/lib/availability";
-import { formatReleaseDate } from "@/lib/format";
-import { getStock } from "@/lib/inventory";
+import { ArtCard } from "@/components/art-card";
+import { ArtistCall } from "@/components/artist-call";
+import { NearMintPromise } from "@/components/near-mint-promise";
+import {
+  ProductGrid,
+  ProductGridWithStock,
+} from "@/components/product-grid";
+import { getFeaturedArtist } from "@/lib/artists";
 import { getActiveProducts, type CatalogProduct } from "@/lib/products";
+import { site } from "@/lib/site";
 
-export default function Home() {
+const NEW_ARRIVALS = 4;
+
+/** Newest release first; products without a date go last. */
+function byReleaseDesc(a: CatalogProduct, b: CatalogProduct) {
+  return (b.releasesOn ?? "").localeCompare(a.releasesOn ?? "");
+}
+
+export default async function Home() {
+  const [artist, products] = await Promise.all([
+    getFeaturedArtist(),
+    getActiveProducts(),
+  ]);
+  const newArrivals = [...products].sort(byReleaseDesc).slice(0, NEW_ARRIVALS);
+
   return (
     <main>
-      <section className="bg-brand-blue">
-        <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-16 sm:pb-20">
-          <div className="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
-            <h1 className="max-w-[18ch] font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.15] font-extrabold">
-              Japanese Pokémon and One Piece booster boxes, shipped from
-              Australia.
-            </h1>
-            <Link
-              href="/products"
-              className="rounded-md bg-gold px-[18px] py-[11px] font-bold text-on-gold transition-colors hover:bg-gold-hover"
+      {/* Hero: the featured artist's art card, or the brand card until there is one. */}
+      <section aria-labelledby="hero-title" className="py-8 sm:py-14">
+        <div className="mx-auto grid w-full max-w-[1160px] items-center gap-8 px-4 md:grid-cols-[0.85fr_1fr] md:gap-14">
+          <figure className="order-2 mx-auto w-full max-w-[300px] md:order-none md:max-w-[420px]">
+            <ArtCard artist={artist} priority />
+            {artist && (
+              <figcaption className="mt-5 flex flex-wrap justify-between gap-3 text-[0.9375rem]">
+                <span>
+                  Art card by <b>{artist.name}</b>
+                  {artist.city && `, ${artist.city}`}
+                </span>
+                <Link
+                  href={`/artists/${artist.slug}`}
+                  className="font-bold text-blue hover:underline"
+                >
+                  Meet the artist →
+                </Link>
+              </figcaption>
+            )}
+          </figure>
+          <div>
+            <h1
+              id="hero-title"
+              className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.12]"
             >
-              Browse booster boxes
-            </Link>
+              Every order comes with a little art.
+            </h1>
+            <p className="mt-5 max-w-[44ch] text-lg text-ink-muted">
+              Japanese Pokémon and One Piece cards and booster boxes, Near Mint
+              or better. Each parcel comes with a sticker and a hand-drawn art
+              card
+              {artist ? `. This month's is by ${artist.name}.` : "."}
+            </p>
+            <div className="mt-7 flex flex-wrap items-center gap-6">
+              <Link
+                href="/products"
+                className="rounded-sm bg-blue px-5 py-3 font-bold text-white transition-colors hover:bg-blue-deep"
+              >
+                Shop new arrivals
+              </Link>
+              <Link href="#parcel" className="font-bold text-blue hover:underline">
+                What&apos;s in the parcel →
+              </Link>
+            </div>
           </div>
-
-          <Suspense fallback={<SpreadPlaceholder />}>
-            <ReleaseSpread />
-          </Suspense>
         </div>
       </section>
 
-      <section className="border-t border-rule">
-        <div className="mx-auto grid w-full max-w-6xl gap-4 px-4 py-16 md:grid-cols-[1fr_1.4fr] md:gap-12">
-          <h2 className="font-display text-[1.75rem] leading-tight font-bold">
-            Near Mint, or we tell you
-          </h2>
-          <p className="max-w-[60ch] text-star-muted">
-            We only sell cards and product we&apos;d grade Near Mint or better.
-            If we ever list something below that, the listing will say so
-            clearly. So far, we never have.
-          </p>
+      {newArrivals.length > 0 && (
+        <section
+          aria-labelledby="new-title"
+          className="border-t border-line py-[72px]"
+        >
+          <div className="mx-auto w-full max-w-[1160px] px-4">
+            <div className="mb-7 flex flex-wrap items-baseline justify-between gap-4">
+              <h2 id="new-title" className="font-display text-[clamp(1.5rem,3vw,2rem)]">
+                New arrivals
+              </h2>
+              <Link href="/products" className="font-bold text-blue hover:underline">
+                See everything →
+              </Link>
+            </div>
+            <Suspense
+              fallback={
+                <ProductGrid products={newArrivals} stock={null} today={null} />
+              }
+            >
+              <ProductGridWithStock products={newArrivals} />
+            </Suspense>
+          </div>
+        </section>
+      )}
+
+      <section
+        id="parcel"
+        aria-labelledby="parcel-title"
+        className="scroll-mt-20 border-t border-line py-[72px]"
+      >
+        <div
+          className={`mx-auto grid w-full max-w-[1160px] items-center gap-8 px-4 ${site.packingPhoto ? "md:grid-cols-2 md:gap-12" : ""}`}
+        >
+          {site.packingPhoto && (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-md">
+              <Image
+                src={site.packingPhoto}
+                alt="A packed Major Arcana Games order with a sticker and art card"
+                fill
+                sizes="(max-width: 768px) 100vw, 560px"
+                className="object-cover"
+              />
+            </div>
+          )}
+          <div className="max-w-[60ch]">
+            <h2 id="parcel-title" className="font-display text-[clamp(1.5rem,3vw,2rem)]">
+              What arrives in your letterbox
+            </h2>
+            <ul className="sparkle-list mt-5 grid gap-3.5">
+              <li>
+                <span>
+                  <b>Your cards, packed properly.</b> Secure, neat packaging.
+                  No crumpled envelopes.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <b>A free sticker,</b> because mail day should feel like mail
+                  day.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <b>A hand-drawn art card</b>
+                  {artist ? ` by ${artist.name}` : ""}. Which one you get is a
+                  surprise, like a pull.
+                </span>
+              </li>
+              {site.dispatchTime && (
+                <li>
+                  <span>
+                    <b>Dispatched within {site.dispatchTime}</b>, with reliable
+                    postage.
+                  </span>
+                </li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <NearMintPromise />
+
+      <section aria-labelledby="people-title" className="py-[72px]">
+        <div className="mx-auto grid w-full max-w-[1160px] items-start gap-8 px-4 md:grid-cols-[1.1fr_1fr] md:gap-12">
+          <div className="grid max-w-[56ch] gap-4">
+            <h2 id="people-title" className="font-display text-[clamp(1.5rem,3vw,2rem)]">
+              A small shop run by people who love the hobby
+            </h2>
+            <p>
+              We started Major Arcana Games to help people find the card that
+              finishes their deck or collection, quickly and without the risk
+              of a stranger on Marketplace.
+            </p>
+            <p>
+              Fair prices, accurate listings, no scalping. Everyone&apos;s
+              welcome here: we&apos;re LGBTQIA+ friendly, judgment-free, and
+              just as excited about your pulls as you are.
+            </p>
+            <Link href="/about" className="font-bold text-blue hover:underline">
+              More about us →
+            </Link>
+          </div>
+          <ArtistCall />
         </div>
       </section>
     </main>
-  );
-}
-
-type Slot = { title: string; product: CatalogProduct };
-
-/**
- * Picks up to three products in date order: the latest release that's out,
- * the next one coming, and the furthest-out pre-order.
- */
-function pickSpread(products: CatalogProduct[], today: string): Slot[] {
-  const dated = products
-    .filter((p): p is CatalogProduct & { releasesOn: string } => !!p.releasesOn)
-    .sort((a, b) => a.releasesOn.localeCompare(b.releasesOn));
-  const released = dated.filter((p) => p.releasesOn <= today);
-  const upcoming = dated.filter((p) => p.releasesOn > today);
-
-  const slots: Slot[] = [];
-  const landed = released.at(-1);
-  if (landed) slots.push({ title: "Just landed", product: landed });
-  if (upcoming[0]) slots.push({ title: "Releasing next", product: upcoming[0] });
-  if (upcoming.length > 1)
-    slots.push({ title: "Pre-orders open", product: upcoming.at(-1)! });
-  return slots;
-}
-
-async function ReleaseSpread() {
-  await connection();
-  const today = todayInJapan(new Date());
-  const slots = pickSpread(await getActiveProducts(), today);
-  if (slots.length === 0) return null;
-
-  const stock = await getStock(
-    slots.flatMap(({ product }) => product.variants.map((v) => v.id)),
-  );
-
-  return (
-    <SpreadRow>
-      {slots.map(({ title, product }) => (
-        <li key={product.id} className="grid snap-start gap-4">
-          <div className="flex items-baseline justify-between gap-2 border-b border-gold-faint pb-2">
-            <h2 className="font-display text-xl font-bold">{title}</h2>
-            <span className="font-mono text-sm opacity-85">
-              {formatReleaseDate(product.releasesOn!)}
-            </span>
-          </div>
-          <ProductCard
-            product={product}
-            availability={getProductAvailability(product, stock, today)}
-          />
-        </li>
-      ))}
-    </SpreadRow>
-  );
-}
-
-/** Three cards across; on phones a swipeable row, like a hand of cards. */
-function SpreadRow({ children }: { children: React.ReactNode }) {
-  return (
-    <ul className="grid snap-x snap-mandatory auto-cols-[72%] grid-flow-col gap-6 overflow-x-auto pb-2 md:auto-cols-auto md:grid-flow-row md:grid-cols-3 md:overflow-visible">
-      {children}
-    </ul>
-  );
-}
-
-function SpreadPlaceholder() {
-  return (
-    <SpreadRow>
-      {[0, 1, 2].map((i) => (
-        <li key={i} className="grid gap-4" aria-hidden="true">
-          <div className="h-[2.35rem] border-b border-gold-faint" />
-          <div className="aspect-[63/88] rounded-md border border-gold-faint bg-night-raised/50" />
-        </li>
-      ))}
-    </SpreadRow>
   );
 }

@@ -22,6 +22,13 @@
       "when": 1792235761003,
       "tag": "0002_product_display_fields",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792236768111,
+      "tag": "0003_artists",
+      "breakpoints": true
     }
   ]
 }

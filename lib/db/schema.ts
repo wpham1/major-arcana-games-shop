@@ -55,6 +55,23 @@ export const products = pgTable("products", {
   ...timestamps,
 });
 
+// Local artists whose work goes into parcels. The featured artist is the
+// one with the latest featured_from; set it when their art card goes out.
+export const artists = pgTable("artists", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  slug: text("slug").notNull().unique(),
+  name: text("name").notNull(),
+  // Where they're based, e.g. "Brisbane" or "Melbourne".
+  city: text("city"),
+  bio: text("bio").notNull().default(""),
+  // Their art card design: a path under /public or a full URL.
+  artworkUrl: text("artwork_url"),
+  // Where people can find more of their work (Instagram, shop, portfolio).
+  linkUrl: text("link_url"),
+  featuredFrom: date("featured_from"),
+  ...timestamps,
+});
+
 // What a customer actually buys: an edition, bundle, or size of a product.
 // Stock lives here, and the check constraint makes overselling impossible
 // at the database level.
