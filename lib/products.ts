@@ -20,7 +20,15 @@ export async function getActiveProducts() {
   cacheTag("products");
 
   return db.query.products.findMany({
-    columns: { id: true, slug: true, name: true },
+    columns: {
+      id: true,
+      slug: true,
+      name: true,
+      nameJa: true,
+      setCode: true,
+      isPreorder: true,
+      releaseDate: true,
+    },
     where: eq(products.status, "active"),
     orderBy: asc(products.name),
     with: {
@@ -35,7 +43,18 @@ export async function getProductBySlug(slug: string) {
   cacheTag("products", `product:${slug}`);
 
   const product = await db.query.products.findFirst({
-    columns: { id: true, slug: true, name: true, description: true },
+    columns: {
+      id: true,
+      slug: true,
+      name: true,
+      nameJa: true,
+      setCode: true,
+      language: true,
+      contents: true,
+      description: true,
+      isPreorder: true,
+      releaseDate: true,
+    },
     where: and(eq(products.slug, slug), eq(products.status, "active")),
     with: {
       variants: { columns: variantColumns, orderBy: asc(variants.position) },

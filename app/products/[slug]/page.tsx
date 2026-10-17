@@ -2,9 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { formatPrice } from "@/lib/format";
+import { formatDate, formatPrice } from "@/lib/format";
 import { getStock } from "@/lib/inventory";
 import { getProductBySlug } from "@/lib/products";
+import { getStockState } from "@/lib/stock-state";
 
 export default function ProductPage({ params }: PageProps<"/products/[slug]">) {
   return (
@@ -42,7 +43,11 @@ async function ProductDetails({
       <Suspense
         fallback={<p className="mt-8 text-zinc-500">Checking stock…</p>}
       >
-        <VariantList variants={product.variants} />
+        <VariantList
+          variants={product.variants}
+          isPreorder={product.isPreorder}
+          releaseDate={product.releaseDate}
+        />
       </Suspense>
     </article>
   );
@@ -50,8 +55,12 @@ async function ProductDetails({
 
 async function VariantList({
   variants,
+  isPreorder,
+  releaseDate,
 }: {
   variants: { id: number; name: string; priceCents: number }[];
+  isPreorder: boolean;
+  releaseDate: string | null;
 }) {
   await connection();
   const stock = await getStock(variants.map((v) => v.id));
@@ -60,6 +69,15 @@ async function VariantList({
     <ul className="mt-8 divide-y divide-black/10 border-y border-black/10 dark:divide-white/15 dark:border-white/15">
       {variants.map((variant) => {
         const available = stock.get(variant.id) ?? 0;
+        const state = getStockState(available, isPreorder);
+        const label = {
+          in_stock: "In stock",
+          low_stock: `Only ${available} left`,
+          preorder: releaseDate
+            ? `Pre-order, ships ${formatDate(releaseDate)}`
+            : "Pre-order",
+          sold_out: "Sold out",
+        }[state];
         return (
           <li
             key={variant.id}
@@ -68,11 +86,7 @@ async function VariantList({
             <div>
               <p className="font-medium">{variant.name}</p>
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                {available === 0
-                  ? "Sold out"
-                  : available <= 5
-                    ? `Only ${available} left`
-                    : "In stock"}
+                {label}
               </p>
             </div>
             <p className="font-medium">{formatPrice(variant.priceCents)}</p>

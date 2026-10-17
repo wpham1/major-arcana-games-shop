@@ -72,7 +72,8 @@ Any Postgres works for local development, for example `DATABASE_URL="postgresql:
 
 ## How data and inventory work
 
-- **Products** have one or more **variants** (editions, bundles). Price and stock live on the variant.
+- **Products** have one or more **variants** (editions, bundles). Price and stock live on the variant. Products also carry the TCG details from DESIGN.md: Japanese title (`nameJa`), set code, language, box contents, and pre-order status with a release date.
+- **Stock state** (in stock, low stock, pre-order, sold out) comes from `getStockState` in `lib/stock-state.ts`. A pre-order sells against its variant's stock as the allocation.
 - **Catalog data** (names, descriptions, prices) is cached with `'use cache'` and tagged `products`. Call `updateTag("products")` after editing a product to refresh it.
 - **Stock is never cached.** Product pages stream it in fresh on every request.
 - **Overselling is prevented in the database.** `reserveStock` checks and decrements in a single SQL statement, and a check constraint keeps stock from going below zero. Wrap several reservations in `db.transaction` to make a whole cart succeed or fail together.
