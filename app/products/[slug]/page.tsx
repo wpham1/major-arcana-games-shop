@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
@@ -33,20 +34,36 @@ async function ProductDetails({
 
   return (
     <article className="mt-8 grid items-start gap-12 md:grid-cols-[0.9fr_1.1fr]">
-      {/* Card-framed photo well. No photos yet, so the set code stands in. */}
+      {/* Card-framed photo well. */}
       <div className="card-face relative! aspect-[63/88] max-w-[340px] md:max-w-none">
-        <div className="grid flex-1 place-items-center rounded-sm bg-night-sunk">
-          <span className="font-display text-5xl font-extrabold text-gold/60">
-            {product.setCode ?? "✦"}
-          </span>
+        <div className="relative grid flex-1 place-items-center overflow-hidden rounded-sm bg-night-sunk">
+          {product.imageUrl ? (
+            <Image
+              src={product.imageUrl}
+              alt={`${product.name} booster box`}
+              fill
+              priority
+              sizes="(max-width: 768px) 340px, 45vw"
+              className="object-contain p-4"
+            />
+          ) : (
+            // No photo yet: the set code stands in, in display type.
+            product.setCode && (
+              <span className="font-display text-5xl font-extrabold text-gold/60">
+                {product.setCode}
+              </span>
+            )
+          )}
         </div>
       </div>
 
       <div className="grid gap-6">
         <div>
-          <p className="font-display text-xl text-star-muted">
-            {product.nameJa ?? "Japanese title to come"}
-          </p>
+          {product.nameJa && (
+            <p className="font-display text-xl text-star-muted">
+              {product.nameJa}
+            </p>
+          )}
           <h1 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.15] font-extrabold">
             {product.name}
           </h1>
@@ -80,7 +97,6 @@ async function ProductDetails({
               ["Set code", product.setCode],
               ["Release", product.releasesOn && formatReleaseDate(product.releasesOn)],
               ["Language", "Japanese"],
-              ["Condition", "Factory sealed, shrink intact"],
             ]
               .filter(([, value]) => value)
               .map(([label, value]) => (

@@ -12,27 +12,17 @@ export default function Home() {
     <main>
       <section className="bg-brand-blue">
         <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-16 sm:pb-20">
-          <div className="mb-12 grid items-end gap-8 md:grid-cols-[1.1fr_1fr]">
-            <h1 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.15] font-extrabold">
-              <span className="mb-2 block text-[0.42em] font-medium opacity-85">
-                日本語版 ブースターボックス
-              </span>
-              Japanese booster boxes, factory sealed and shipped from
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-x-12 gap-y-6">
+            <h1 className="max-w-[18ch] font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.15] font-extrabold">
+              Japanese Pokémon and One Piece booster boxes, shipped from
               Australia.
             </h1>
-            <div className="grid max-w-[46ch] gap-5">
-              <p>
-                Every box is shrink-wrapped as it left the Japanese
-                distributor. Pre-orders lock in your box at today&apos;s price
-                and ship on release day.
-              </p>
-              <Link
-                href="/products"
-                className="w-fit rounded-md bg-gold px-[18px] py-[11px] font-bold text-on-gold transition-colors hover:bg-gold-hover"
-              >
-                Browse booster boxes
-              </Link>
-            </div>
+            <Link
+              href="/products"
+              className="rounded-md bg-gold px-[18px] py-[11px] font-bold text-on-gold transition-colors hover:bg-gold-hover"
+            >
+              Browse booster boxes
+            </Link>
           </div>
 
           <Suspense fallback={<SpreadPlaceholder />}>

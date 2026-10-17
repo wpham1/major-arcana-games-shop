@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     template: "%s | Major Arcana Games",
   },
   description:
-    "Factory-sealed Japanese Pokémon and One Piece booster boxes, shipped from Australia.",
+    "Japanese Pokémon and One Piece booster boxes, shipped from Australia.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

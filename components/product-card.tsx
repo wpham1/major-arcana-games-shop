@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { AvailabilityBadge } from "@/components/availability-badge";
 import type { Availability } from "@/lib/availability";
@@ -34,16 +35,30 @@ export function ProductCard({
     >
       <div className="card-inner">
         <div className="card-face">
-          {/* No product photos yet: the set code stands in, in display type. */}
-          <div className="card-photo relative grid min-h-0 flex-1 place-items-center rounded-sm bg-night-sunk">
-            <span className="font-display text-[clamp(1.5rem,4vw,2.25rem)] font-extrabold text-gold/60">
-              {product.setCode ?? "✦"}
-            </span>
+          <div className="card-photo relative grid min-h-0 flex-1 place-items-center overflow-hidden rounded-sm bg-night-sunk">
+            {product.imageUrl ? (
+              <Image
+                src={product.imageUrl}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 50vw, 280px"
+                className="object-contain p-2"
+              />
+            ) : (
+              // No photo yet: the set code stands in, in display type.
+              product.setCode && (
+                <span className="font-display text-[clamp(1.5rem,4vw,2.25rem)] font-extrabold text-gold/60">
+                  {product.setCode}
+                </span>
+              )
+            )}
           </div>
           <div className="grid gap-0.5 px-2 pt-4 pb-2">
-            <p className="font-display text-[0.8125rem] leading-snug text-star-muted">
-              {product.nameJa ?? "Japanese title to come"}
-            </p>
+            {product.nameJa && (
+              <p className="font-display text-[0.8125rem] leading-snug text-star-muted">
+                {product.nameJa}
+              </p>
+            )}
             <h3 className="card-title font-display text-[1.0625rem] leading-tight font-bold">
               {product.name}
             </h3>

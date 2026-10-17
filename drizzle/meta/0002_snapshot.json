@@ -1,5 +1,5 @@
 {
-  "id": "6878a25b-9e5a-4eae-a3c3-3308745a862f",
+  "id": "b7c5ffe8-647f-44d3-8bf7-d72e119331a4",
   "prevId": "8c795585-adbc-46ad-a0bb-7c422f8b42f5",
   "version": "7",
   "dialect": "postgresql",
@@ -231,6 +231,12 @@
         "releases_on": {
           "name": "releases_on",
           "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },

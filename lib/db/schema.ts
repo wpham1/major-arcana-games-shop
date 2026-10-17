@@ -47,6 +47,9 @@ export const products = pgTable("products", {
   // Release day in Japan time. A product releasing after today sells as a
   // pre-order.
   releasesOn: date("releases_on"),
+  // Main box photo: a path under /public or a full URL. Remote hosts must be
+  // listed in images.remotePatterns in next.config.ts.
+  imageUrl: text("image_url"),
   description: text("description").notNull().default(""),
   status: productStatus("status").notNull().default("draft"),
   ...timestamps,

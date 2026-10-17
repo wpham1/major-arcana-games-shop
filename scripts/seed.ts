@@ -7,10 +7,11 @@ config({ path: [".env.local", ".env"], quiet: true });
 
 // Covers every storefront state: in stock, low stock, sold out, pre-order,
 // and a missing Japanese title. Names are real sets; prices, stock and dates
-// are made up.
+// are made up. Images are placeholders from scripts/placeholder-images.py.
 const examples = [
   {
     slug: "mega-symphonia-booster-box",
+    imageUrl: "/products/mega-symphonia-booster-box.svg",
     name: "Mega Symphonia",
     nameJa: "メガシンフォニア",
     setCode: "M1S",
@@ -23,6 +24,7 @@ const examples = [
   },
   {
     slug: "mega-brave-booster-box",
+    imageUrl: "/products/mega-brave-booster-box.svg",
     name: "Mega Brave",
     nameJa: "メガブレイブ",
     setCode: "M1L",
@@ -34,17 +36,19 @@ const examples = [
   },
   {
     slug: "mega-30th-celebration-booster-box",
+    imageUrl: "/products/mega-30th-celebration-booster-box.svg",
     name: "MEGA 30th Celebration",
     nameJa: null,
     setCode: "M6a",
     releasesOn: "2026-12-12",
-    description: "Japanese booster box. Limit one per order.",
+    description: "Japanese booster box.",
     variants: [
       { sku: "M6A-BOX", name: "Booster box", priceCents: 33999, stock: 20 },
     ],
   },
   {
     slug: "heat-wave-arena-booster-box",
+    imageUrl: "/products/heat-wave-arena-booster-box.svg",
     name: "Heat Wave Arena",
     nameJa: "熱風のアリーナ",
     setCode: "SV9a",
@@ -56,6 +60,7 @@ const examples = [
   },
   {
     slug: "terastal-festival-ex-booster-box",
+    imageUrl: "/products/terastal-festival-ex-booster-box.svg",
     name: "Terastal Festival ex",
     nameJa: "テラスタルフェスex",
     setCode: "SV8a",
@@ -67,6 +72,7 @@ const examples = [
   },
   {
     slug: "emperors-in-the-new-world-booster-box",
+    imageUrl: "/products/emperors-in-the-new-world-booster-box.svg",
     name: "Emperors in the New World",
     nameJa: "新たなる皇帝",
     setCode: "OP-09",

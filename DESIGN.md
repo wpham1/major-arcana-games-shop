@@ -83,7 +83,7 @@ components:
 **Mode per surface:**
 - Home: Persuade. The three-card release spread sells what's new and what's next.
 - Catalogue, cart, checkout: Operate. Fast scanning, stock and price first.
-- Product page: Read, then Operate. Specs, trust details, then one action.
+- Product page: Read, then Operate. Photo and specs, then one action.
 
 **Reference sites:** [PokéBox AU](https://www.pokebox.com.au/), [GD Games](https://www.gdgames.com.au/collections/japanese-pokemon-tcg), [TCGroup AU](https://www.tcgroupau.com.au/), [Samurai Sword Tokyo](https://samuraiswordtokyo.com/pages/about). Research was search-only; no screenshots were taken. The category competes on trust (factory sealed, authentic, reliable pre-orders), not on visual identity, which leaves room to stand out.
 **Key characteristics:**
@@ -128,11 +128,11 @@ Tiles sit on `night-raised` with a soft offset shadow (`0 10px 24px -14px rgba(0
 
 - Cards: outer radius `md` (6px) with an inner gold rule inset 5px at `sm` (3px), so the inner radius follows outer minus gap.
 - Buttons `md`, inputs and chips `sm`. Status dots are the only circles.
-- The logo's four-point sparkle (✦) is the one ornament: list bullets on trust copy, the info/pre-order notice glyph.
+- The logo's four-point sparkle (✦) is the one ornament: the info notice glyph. Not a filler for missing data.
 
 ## Components
 
-- **Product tile:** photo well (`night-sunk`; shows the set code in display type while a photo is missing), Japanese title, English title, price, stock state. Hover or keyboard focus turns the card over to the back: set code, box contents, language, stock or ship date, and the action. Touch devices don't flip; the code, contents and action sit on the front. With `prefers-reduced-motion`, the back cross-fades instead of rotating. Sold-out tiles dim the photo and title and swap the action for "Notify me". A missing Japanese title shows "Japanese title to come" rather than an empty line.
+- **Product tile:** photo well (`night-sunk`; the box photo from `image_url`, or the set code in display type while there is no photo), Japanese title, English title, price, stock state. Hover or keyboard focus turns the card over to the back: set code, box contents, language, stock or ship date, and the action. Touch devices don't flip; the code, contents and action sit on the front. With `prefers-reduced-motion`, the back cross-fades instead of rotating. Sold-out tiles dim the photo and title and swap the action for "Notify me". A missing Japanese title leaves the line out.
 - **Buttons:** primary (gold), secondary (gold-faint outline), ghost (muted text), disabled (raised fill, muted text). The active state nudges down 1px. Labels name the outcome: "Add to cart · A$99.95", "Pre-order", "Notify me".
 - **Inputs:** `night-sunk` fill. Focus shows a gold border plus a 3px gold-faint ring. Errors show a coral border plus a coral message that says how to fix it.
 - **Notices:** a tinted background with a glyph (✓ jade, ✦ sky, ! gold, × coral). No coloured side borders.
@@ -150,6 +150,9 @@ Tiles sit on `night-raised` with a soft offset shadow (`0 10px 24px -14px rgba(0
 - Don't add a coloured left border to cards or notices; signal state with tint, glyph and label.
 - Don't use emoji as icons, or generic hype copy ("Unleash your collection").
 - Don't use square Shopify-style tiles; products are cards.
+- Don't write policy or quality claims (sealed condition, shipping, pre-order pricing, returns) the shop hasn't confirmed. Cut the line instead.
+- Don't put a small label above a heading; the heading carries itself.
+- Don't show customers placeholder or developer copy ("to come", "run db:seed").
 
 ## Motion
 
@@ -167,3 +170,4 @@ Tiles sit on `night-raised` with a soft offset shadow (`0 10px 24px -14px rgba(0
 | 2026-10-17 | Dark only, no light theme | Use scene (evening, phone) and the white-text logo lockup; a light variant drifts toward a generic cream/serif look |
 | 2026-10-17 | Card-proportion tiles with flip | Echoes the fanned-card logo; turns the catalogue into a spread; flip shows box contents without a page load |
 | 2026-10-17 | Tokens wired into the Next.js app | Tailwind v4 `@theme` in `app/globals.css`, fonts via `next/font/google`, card flip as plain CSS; products gained `name_ja`, `set_code` and `releases_on` |
+| 2026-10-17 | Slop pass: cut unconfirmed claims, hero kicker and placeholder copy; added product images | Copy promised policies the shop never set; box photos are the product, so `image_url` plus placeholders until real photos arrive |

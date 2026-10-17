@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 640" role="img" aria-label="Placeholder image for Mega Brave">
+  <polygon points="120,210 220,120 700,120 600,210" fill="#cf6959"/>
+  <polygon points="600,210 700,120 700,430 600,520" fill="#733026"/>
+  <rect x="120" y="210" width="480" height="310" fill="#a64030"/>
+  <rect x="140" y="230" width="440" height="270" fill="none" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>
+  <text x="360" y="370" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="92" fill="#ffffff">M1L</text>
+  <text x="360" y="430" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#ffffff" fill-opacity="0.9">Mega Brave</text>
+  <text x="400" y="600" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="24" letter-spacing="3" fill="#a9b4cf">PLACEHOLDER IMAGE</text>
+</svg>
