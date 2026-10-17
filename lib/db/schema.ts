@@ -1,6 +1,8 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
   check,
+  date,
   integer,
   pgEnum,
   pgTable,
@@ -25,6 +27,11 @@ export const productStatus = pgEnum("product_status", [
   "archived",
 ]);
 
+export const productLanguage = pgEnum("product_language", [
+  "japanese",
+  "english",
+]);
+
 export const orderStatus = pgEnum("order_status", [
   "pending", // checkout started, stock reserved
   "paid",
@@ -38,8 +45,20 @@ export const products = pgTable("products", {
   // Matches Shopify's /products/<handle> URLs so old links keep working.
   slug: text("slug").notNull().unique(),
   name: text("name").notNull(),
+  // Shown above the English name as proof of the real Japanese product.
+  // Null shows "Japanese title to come".
+  nameJa: text("name_ja"),
+  // How collectors search, e.g. "SV9a" or "OP-09".
+  setCode: text("set_code"),
+  language: productLanguage("language").notNull().default("japanese"),
+  // Free text, e.g. "30 packs, 5 cards per pack".
+  contents: text("contents"),
   description: text("description").notNull().default(""),
   status: productStatus("status").notNull().default("draft"),
+  // Pre-orders sell against `variants.stock` as their allocation, and ship
+  // from the release date.
+  isPreorder: boolean("is_preorder").notNull().default(false),
+  releaseDate: date("release_date", { mode: "string" }),
   ...timestamps,
 });
 

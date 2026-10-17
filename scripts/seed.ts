@@ -9,6 +9,9 @@ const examples = [
   {
     slug: "example-card-game",
     name: "Example Card Game",
+    nameJa: "サンプルカードゲーム",
+    setCode: "EX1",
+    contents: "30 packs, 5 cards per pack",
     description: "A placeholder product with two editions.",
     variants: [
       { sku: "ECG-STD", name: "Standard edition", priceCents: 2999, stock: 12 },
@@ -21,6 +24,18 @@ const examples = [
     description: "A placeholder product with a single variant.",
     variants: [
       { sku: "ETD-STD", name: "Standard", priceCents: 3500, stock: 0 },
+    ],
+  },
+  {
+    slug: "example-preorder-box",
+    name: "Example Pre-order Box",
+    setCode: "EX2",
+    contents: "20 packs, 10 cards per pack",
+    description: "A placeholder pre-order with no Japanese title yet.",
+    isPreorder: true,
+    releaseDate: "2026-12-05",
+    variants: [
+      { sku: "EPB-BOX", name: "Booster box", priceCents: 18995, stock: 24 },
     ],
   },
 ];
