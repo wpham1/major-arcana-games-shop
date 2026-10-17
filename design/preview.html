@@ -241,9 +241,6 @@ section.band { padding-block: var(--space-7); border-top: 1px solid var(--rule);
 .spec-table th, .spec-table td { text-align: left; padding: 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
 .spec-table th { font-weight: 500; color: var(--star-muted); width: 40%; }
 .spec-table td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
-.trust { display: grid; gap: var(--space-2); font-size: 0.9375rem; color: var(--star-muted); padding: 0; margin: 0; list-style: none; }
-.trust li { display: flex; gap: var(--space-2); }
-.trust li::before { content: "✦"; color: var(--gold); font-size: 0.75rem; line-height: 2.1; }
 @media (max-width: 760px) { .pdp { grid-template-columns: 1fr; } .pdp .tile { max-width: 340px; } }
 
 /* System reference */
@@ -293,8 +290,7 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
   <section class="hero">
     <div class="wrap">
       <div class="hero-head">
-        <h1><span class="jp">日本語版 ブースターボックス</span>Japanese booster boxes, factory sealed and shipped from Australia.</h1>
-        <p class="hero-copy">Every box is shrink-wrapped as it left the Japanese distributor. Pre-orders lock in your box at today's price and ship on release day.</p>
+        <h1>Japanese Pokémon and One Piece booster boxes, shipped from Australia.</h1>
       </div>
 
       <div class="spread">
@@ -333,7 +329,7 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
               </div>
               <div class="face face-back" aria-hidden="true">
                 <p class="back-title">Mega Brave</p>
-                <dl class="specs"><dt>Set code</dt><dd>M1L</dd><dt>Box</dt><dd>30 packs × 5</dd><dt>Ships</dt><dd>24 Oct</dd><dt>Limit</dt><dd>2 per order</dd></dl>
+                <dl class="specs"><dt>Set code</dt><dd>M1L</dd><dt>Box</dt><dd>30 packs × 5</dd><dt>Release</dt><dd>24 Oct</dd></dl>
                 <button class="btn btn-primary btn-sm btn-block" type="button" tabindex="-1">Pre-order</button>
               </div>
             </div>
@@ -347,14 +343,14 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
               <div class="face face-front">
                 <div class="photo"><span class="code">M6a</span><span class="note">Box photo</span></div>
                 <div class="tile-body">
-                  <span class="jp">Japanese title to come</span>
+                  <span class="jp"></span>
                   <h3>MEGA 30th Celebration</h3>
                   <div class="tile-foot"><span class="price">A$339.99</span><span class="stock pre">Pre-order</span></div>
                 </div>
               </div>
               <div class="face face-back" aria-hidden="true">
                 <p class="back-title">MEGA 30th Celebration</p>
-                <dl class="specs"><dt>Set code</dt><dd>M6a</dd><dt>Ships</dt><dd>12 Dec</dd><dt>Deposit</dt><dd>None</dd><dt>Limit</dt><dd>1 per order</dd></dl>
+                <dl class="specs"><dt>Set code</dt><dd>M6a</dd><dt>Ships</dt><dd>12 Dec</dd><dt>Language</dt><dd>Japanese</dd></dl>
                 <button class="btn btn-primary btn-sm btn-block" type="button" tabindex="-1">Pre-order</button>
               </div>
             </div>
@@ -369,7 +365,7 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
     <div class="wrap">
       <div class="section-head">
         <h2>Booster boxes</h2>
-        <p>Hover or tab to a box to turn it over. On a phone, the details sit on the front instead.</p>
+        
       </div>
       <div class="toolbar" role="group" aria-label="Filter">
         <button class="chip" type="button" aria-pressed="true">All</button>
@@ -391,7 +387,7 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
         <article class="tile">
           <div class="tile-inner">
             <div class="face face-front">
-              <div class="photo" style="min-height: 320px"><span class="code">SV9a</span><span class="note">Box photo · 3 angles + seal close-up</span></div>
+              <div class="photo" style="min-height: 320px"><span class="code">SV9a</span><span class="note">Box photo</span></div>
             </div>
           </div>
         </article>
@@ -413,21 +409,14 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
             </div>
             <button class="btn btn-primary" type="button" id="add">Add to cart · A$99.95</button>
           </div>
-          <div class="notice ok" id="added" hidden><span class="glyph">✓</span><span>Added to your cart. <b>2 boxes</b> are reserved for 15 minutes.</span></div>
+          <div class="notice ok" id="added" hidden><span class="glyph">✓</span><span>Added <b>1 box</b> to your cart.</span></div>
           <table class="spec-table">
             <tbody>
               <tr><th scope="row">Set code</th><td>SV9a</td></tr>
               <tr><th scope="row">Contents</th><td>30 packs × 5 cards</td></tr>
               <tr><th scope="row">Language</th><td>Japanese</td></tr>
-              <tr><th scope="row">Condition</th><td>Factory sealed, shrink intact</td></tr>
-              <tr><th scope="row">Dispatch</th><td>Next business day</td></tr>
             </tbody>
           </table>
-          <ul class="trust">
-            <li>Photographed on arrival, so the box you see is the box you get.</li>
-            <li>Shipped in a double box with corner protectors, tracked and insured.</li>
-            <li>Sealed product can't be returned once the shrink is opened.</li>
-          </ul>
         </div>
       </div>
     </div>
@@ -497,8 +486,8 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
           </div>
           <div class="stack" style="gap: var(--space-2)">
             <div class="notice ok"><span class="glyph">✓</span><span>Order MAG-10482 is packed and leaves today.</span></div>
-            <div class="notice info"><span class="glyph">✦</span><span>Pre-orders are charged when you order and ship on release day.</span></div>
-            <div class="notice warn"><span class="glyph">!</span><span>Only 2 left. Your cart holds them for 15 minutes.</span></div>
+            <div class="notice info"><span class="glyph">✦</span><span>Mega Brave releases on 24 Oct.</span></div>
+            <div class="notice warn"><span class="glyph">!</span><span>Only 2 left.</span></div>
             <div class="notice err"><span class="glyph">×</span><span>Terastal Festival ex sold out while it was in your cart. We've removed it and left the rest of your order as it was.</span></div>
           </div>
         </div>
@@ -536,7 +525,7 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
         '<div class="face face-front">' +
           '<div class="photo"><span class="code">' + esc(p.code) + '</span><span class="note">Box photo</span></div>' +
           '<div class="tile-body">' +
-            '<span class="jp">' + (p.jp ? esc(p.jp) : "Japanese title to come") + "</span>" +
+            '<span class="jp">' + esc(p.jp) + "</span>" +
             "<h3>" + esc(p.en) + "</h3>" +
             '<div class="tile-foot"><span class="price">A$' + p.price + '</span><span class="stock ' + p.stock + '">' + esc(p.label) + "</span></div>" +
             '<div class="touch-only"><span class="muted mono">' + esc(p.code) + " · " + esc(p.box) + "</span>" + action + "</div>" +
@@ -564,7 +553,7 @@ footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-cont
   document.getElementById("qty-inc").addEventListener("click", function () { if (qty < max) { qty++; render(); } });
   add.addEventListener("click", function () {
     var n = document.getElementById("added");
-    n.querySelector("b").textContent = qty + (qty === 1 ? " box is" : " boxes are");
+    n.querySelector("b").textContent = qty + (qty === 1 ? " box" : " boxes");
     n.hidden = false;
     var c = document.getElementById("cart-count");
     c.textContent = Number(c.textContent) + qty;

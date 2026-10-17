@@ -5,22 +5,81 @@ import { config } from "dotenv";
 
 config({ path: [".env.local", ".env"], quiet: true });
 
+// Covers every storefront state: in stock, low stock, sold out, pre-order,
+// and a missing Japanese title. Names are real sets; prices, stock and dates
+// are made up. Images are placeholders from scripts/placeholder-images.py.
 const examples = [
   {
-    slug: "example-card-game",
-    name: "Example Card Game",
-    description: "A placeholder product with two editions.",
+    slug: "mega-symphonia-booster-box",
+    imageUrl: "/products/mega-symphonia-booster-box.svg",
+    name: "Mega Symphonia",
+    nameJa: "メガシンフォニア",
+    setCode: "M1S",
+    releasesOn: "2026-10-03",
+    description: "Japanese booster box: 30 packs, 5 cards per pack.",
     variants: [
-      { sku: "ECG-STD", name: "Standard edition", priceCents: 2999, stock: 12 },
-      { sku: "ECG-DLX", name: "Deluxe edition", priceCents: 5499, stock: 3 },
+      { sku: "M1S-BOX", name: "Booster box", priceCents: 11995, stock: 14 },
+      { sku: "M1S-CASE", name: "Case of 12 boxes", priceCents: 139900, stock: 1 },
     ],
   },
   {
-    slug: "example-tarot-deck",
-    name: "Example Tarot Deck",
-    description: "A placeholder product with a single variant.",
+    slug: "mega-brave-booster-box",
+    imageUrl: "/products/mega-brave-booster-box.svg",
+    name: "Mega Brave",
+    nameJa: "メガブレイブ",
+    setCode: "M1L",
+    releasesOn: "2026-10-24",
+    description: "Japanese booster box: 30 packs, 5 cards per pack.",
     variants: [
-      { sku: "ETD-STD", name: "Standard", priceCents: 3500, stock: 0 },
+      { sku: "M1L-BOX", name: "Booster box", priceCents: 12495, stock: 40 },
+    ],
+  },
+  {
+    slug: "mega-30th-celebration-booster-box",
+    imageUrl: "/products/mega-30th-celebration-booster-box.svg",
+    name: "MEGA 30th Celebration",
+    nameJa: null,
+    setCode: "M6a",
+    releasesOn: "2026-12-12",
+    description: "Japanese booster box.",
+    variants: [
+      { sku: "M6A-BOX", name: "Booster box", priceCents: 33999, stock: 20 },
+    ],
+  },
+  {
+    slug: "heat-wave-arena-booster-box",
+    imageUrl: "/products/heat-wave-arena-booster-box.svg",
+    name: "Heat Wave Arena",
+    nameJa: "熱風のアリーナ",
+    setCode: "SV9a",
+    releasesOn: "2025-03-14",
+    description: "Japanese booster box: 30 packs, 5 cards per pack.",
+    variants: [
+      { sku: "SV9A-BOX", name: "Booster box", priceCents: 9995, stock: 2 },
+    ],
+  },
+  {
+    slug: "terastal-festival-ex-booster-box",
+    imageUrl: "/products/terastal-festival-ex-booster-box.svg",
+    name: "Terastal Festival ex",
+    nameJa: "テラスタルフェスex",
+    setCode: "SV8a",
+    releasesOn: "2024-12-06",
+    description: "Japanese high-class pack box: 10 packs, 10 cards per pack.",
+    variants: [
+      { sku: "SV8A-BOX", name: "Booster box", priceCents: 28995, stock: 0 },
+    ],
+  },
+  {
+    slug: "emperors-in-the-new-world-booster-box",
+    imageUrl: "/products/emperors-in-the-new-world-booster-box.svg",
+    name: "Emperors in the New World",
+    nameJa: "新たなる皇帝",
+    setCode: "OP-09",
+    releasesOn: "2024-11-30",
+    description: "One Piece Card Game Japanese booster box: 24 packs, 6 cards per pack.",
+    variants: [
+      { sku: "OP09-BOX", name: "Booster box", priceCents: 18995, stock: 6 },
     ],
   },
 ];
