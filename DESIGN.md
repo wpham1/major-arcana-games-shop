@@ -171,3 +171,4 @@ Tiles sit on `night-raised` with a soft offset shadow (`0 10px 24px -14px rgba(0
 | 2026-10-17 | Card-proportion tiles with flip | Echoes the fanned-card logo; turns the catalogue into a spread; flip shows box contents without a page load |
 | 2026-10-17 | Tokens wired into the Next.js app | Tailwind v4 `@theme` in `app/globals.css`, fonts via `next/font/google`, card flip as plain CSS; products gained `name_ja`, `set_code` and `releases_on` |
 | 2026-10-17 | Slop pass: cut unconfirmed claims, hero kicker and placeholder copy; added product images | Copy promised policies the shop never set; box photos are the product, so `image_url` plus placeholders until real photos arrive |
+| 2026-10-17 | Condition policy shown on the home page and every product page | Confirmed by the shop: nothing below Near Mint is sold unless the listing says so explicitly (none so far). A real policy, so it can be stated plainly |

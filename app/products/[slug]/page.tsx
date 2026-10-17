@@ -91,6 +91,11 @@ async function ProductDetails({
           />
         </Suspense>
 
+        <p className="text-[0.9375rem] text-star-muted">
+          Near Mint or better. We&apos;d say so clearly in this listing if it
+          weren&apos;t.
+        </p>
+
         <table className="w-full border-collapse text-[0.9375rem]">
           <tbody>
             {[

@@ -30,6 +30,19 @@ export default function Home() {
           </Suspense>
         </div>
       </section>
+
+      <section className="border-t border-rule">
+        <div className="mx-auto grid w-full max-w-6xl gap-4 px-4 py-16 md:grid-cols-[1fr_1.4fr] md:gap-12">
+          <h2 className="font-display text-[1.75rem] leading-tight font-bold">
+            Near Mint, or we tell you
+          </h2>
+          <p className="max-w-[60ch] text-star-muted">
+            We only sell cards and product we&apos;d grade Near Mint or better.
+            If we ever list something below that, the listing will say so
+            clearly. So far, we never have.
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
