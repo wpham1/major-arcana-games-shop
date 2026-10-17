@@ -1,0 +1,573 @@
+<title>Major Arcana Design System</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Shippori+Mincho+B1:wght@500;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: strict catalogue grid of card-proportion (63:88) tiles; the home page opens on a three-card "spread" of releases in time order. */
+:root {
+  /* Midnight & marigold: brand blue #264D97 darkened into the ground, brand gold #F9BB59 as the one action colour */
+  --night: #0D1630;
+  --night-raised: #16224A;
+  --night-sunk: #091024;
+  --brand-blue: #264D97;
+  --star: #F6F1E7;
+  --star-muted: #A9B4CF;
+  --gold: #F9BB59;
+  --gold-hover: #FFCB78;
+  --gold-faint: rgba(249, 187, 89, 0.3);
+  --on-gold: #222222;
+  --jade: #6FCB9A;
+  --coral: #FF8F70;
+  --sky: #9DB8F2;
+  --rule: rgba(246, 241, 231, 0.12);
+
+  --font-display: "Shippori Mincho B1", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.75rem;
+  --step-3: clamp(2rem, 4.5vw, 3.25rem);
+
+  --space-1: 4px; --space-2: 8px; --space-3: 16px; --space-4: 24px;
+  --space-5: 32px; --space-6: 48px; --space-7: 80px;
+
+  --r-sm: 3px; --r-md: 6px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--night);
+  color: var(--star);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night);
+}
+.wrap {
+  max-width: 1200px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-size: var(--step-2); }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.muted { color: var(--star-muted); }
+.jp { font-family: var(--font-display); font-weight: 500; color: var(--star-muted); }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--night); border-bottom: 1px solid var(--rule);
+}
+.site-header .wrap { display: flex; align-items: center; gap: var(--space-4); padding-block: var(--space-3); flex-wrap: wrap; }
+.wordmark { display: block; line-height: 0; }
+.wordmark .logo { height: 48px; width: auto; }
+.nav { display: flex; gap: var(--space-4); margin-left: auto; flex-wrap: wrap; }
+.nav a { text-decoration: none; font-weight: 500; color: var(--star-muted); padding-block: var(--space-1); }
+.nav a:hover, .nav a[aria-current] { color: var(--star); }
+.nav a[aria-current] { box-shadow: inset 0 -1px 0 var(--gold); }
+.cart-btn { font: inherit; font-weight: 500; color: var(--star); background: transparent; border: 1px solid var(--rule); border-radius: var(--r-md); padding: 6px 12px; cursor: pointer; }
+.cart-btn .mono { color: var(--gold); }
+
+/* ---------- Hero: the spread ---------- */
+.hero { padding-block: var(--space-6) var(--space-7); background: var(--brand-blue); }
+.hero .jp, .hero .spread-slot > header .muted { color: var(--star); opacity: 0.85; }
+.hero .tile-body .jp { color: var(--star-muted); opacity: 1; }
+.hero-head { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: var(--space-5); align-items: end; margin-bottom: var(--space-6); }
+.hero h1 { font-size: var(--step-3); font-weight: 800; }
+.hero h1 .jp { display: block; font-size: 0.42em; margin-bottom: var(--space-2); font-weight: 500; }
+.hero-copy { color: var(--star); max-width: 46ch; }
+.spread { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); }
+.spread-slot { display: grid; gap: var(--space-3); }
+.spread-slot > header { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2); border-bottom: 1px solid var(--gold-faint); padding-bottom: var(--space-2); }
+.spread-slot > header strong { font-family: var(--font-display); font-size: var(--step-1); }
+@media (max-width: 760px) {
+  .hero-head { grid-template-columns: 1fr; }
+  /* Phone: the spread becomes a swipeable row, like fanning cards in hand */
+  .spread { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: var(--space-2); }
+  .spread-slot { scroll-snap-align: start; }
+  .site-header .wrap { gap: var(--space-2) var(--space-3); }
+  .wordmark .logo { height: 40px; }
+  .cart-btn { margin-left: auto; }
+  .nav { order: 3; width: 100%; margin-left: 0; flex-wrap: nowrap; overflow-x: auto; gap: var(--space-4); }
+  .nav a { white-space: nowrap; }
+}
+
+/* ---------- Product tile (card proportion, gold frame, flip) ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-5) var(--space-4); }
+@media (max-width: 520px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4) var(--space-3); } }
+.tile { perspective: 1400px; }
+.tile-inner {
+  position: relative; aspect-ratio: 63 / 88; max-width: 100%;
+  transform-style: preserve-3d; transition: transform 520ms var(--ease-out);
+}
+.face {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: var(--night-raised); border-radius: var(--r-md);
+  border: 1px solid var(--gold-faint);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 10px 24px -14px rgba(0,0,0,0.8);
+  padding: 7px; display: flex; flex-direction: column;
+}
+.face::after { /* inner gold rule: the card frame */
+  content: ""; position: absolute; inset: 5px; border: 1px solid var(--gold-faint); border-radius: var(--r-sm); pointer-events: none;
+}
+.face-back { transform: rotateY(180deg); padding: var(--space-4) var(--space-3); gap: var(--space-3); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tile:hover .tile-inner, .tile:focus-within .tile-inner { transform: rotateY(180deg); }
+}
+/* Reduced motion: cross-fade instead of turning the card */
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
+  .tile-inner { transform: none; }
+  .face-back { transform: none; opacity: 0; transition: opacity 150ms linear; }
+  .tile:hover .face-back, .tile:focus-within .face-back { opacity: 1; }
+}
+/* Touch: no flip; key facts and the button live on the front */
+.touch-only { display: none; }
+@media (hover: none) {
+  .face-back { display: none; }
+  .touch-only { display: flex; }
+}
+
+.photo {
+  flex: 1 1 auto; min-height: 0; border-radius: var(--r-sm); background: var(--night-sunk);
+  display: grid; place-items: center; text-align: center; position: relative; overflow: hidden;
+}
+.photo .code { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.5rem, 4vw, 2.25rem); color: var(--gold); opacity: 0.6; letter-spacing: 0.02em; }
+.photo .note { position: absolute; bottom: 6px; left: 0; right: 0; font-size: 0.6875rem; color: var(--star-muted); opacity: 0.7; }
+.tile-body { padding: var(--space-3) var(--space-2) var(--space-2); display: grid; gap: 2px; }
+.tile-body .jp { font-size: var(--step--1); line-height: 1.35; }
+.tile-body h3 { font-size: 1.0625rem; font-weight: 700; }
+.tile-foot { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-2); margin-top: var(--space-2); flex-wrap: wrap; }
+.price { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-weight: 500; font-size: 1.0625rem; }
+.price small { font-size: 0.6875rem; color: var(--star-muted); font-weight: 400; }
+
+.stock { display: inline-flex; align-items: center; gap: 6px; font-size: var(--step--1); font-weight: 500; white-space: nowrap; }
+.stock::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+.stock.in { color: var(--jade); }
+.stock.low { color: var(--coral); }
+.stock.pre { color: var(--sky); }
+.stock.pre::before { border-radius: 1px; transform: rotate(45deg); }
+.stock.out { color: var(--star-muted); }
+.stock.out::before { background: transparent; border: 1px solid currentColor; }
+.tile.is-out .photo, .tile.is-out .tile-body h3 { opacity: 0.55; }
+
+.back-title { font-family: var(--font-display); font-weight: 700; font-size: var(--step-1); line-height: 1.2; }
+.specs { display: grid; grid-template-columns: auto 1fr; gap: 6px var(--space-3); margin: 0; font-size: var(--step--1); }
+.specs dt { color: var(--star-muted); }
+.specs dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.face-back .btn { margin-top: auto; }
+.touch-only { flex-direction: column; gap: var(--space-2); margin-top: var(--space-2); font-size: 0.75rem; }
+
+/* ---------- Buttons, inputs, alerts ---------- */
+.btn {
+  font: inherit; font-weight: 700; font-size: 0.9375rem; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  padding: 11px 18px; border-radius: var(--r-md); border: 1px solid transparent; text-decoration: none;
+  transition: background-color 150ms var(--ease-out), border-color 150ms var(--ease-out), transform 100ms;
+}
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--gold); color: var(--on-gold); }
+.btn-primary:hover { background: var(--gold-hover); }
+.btn-secondary { background: transparent; color: var(--star); border-color: var(--gold-faint); }
+.btn-secondary:hover { border-color: var(--gold); }
+.btn-ghost { background: transparent; color: var(--star-muted); padding-inline: 8px; }
+.btn-ghost:hover { color: var(--star); }
+.btn[disabled] { background: var(--night-raised); color: var(--star-muted); cursor: not-allowed; border-color: var(--rule); }
+.btn-block { width: 100%; }
+.btn-sm { padding: 8px 12px; font-size: var(--step--1); }
+
+.field { display: grid; gap: 6px; }
+.field label { font-size: var(--step--1); font-weight: 500; color: var(--star-muted); }
+.input, .select {
+  font: inherit; color: var(--star); background: var(--night-sunk);
+  border: 1px solid var(--rule); border-radius: var(--r-sm); padding: 10px 12px; width: 100%;
+}
+.input:focus, .select:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-faint); }
+.input.is-error { border-color: var(--coral); }
+.field .err { font-size: var(--step--1); color: var(--coral); }
+
+.notice { display: flex; gap: var(--space-3); align-items: flex-start; padding: 12px 14px; border-radius: var(--r-md); font-size: 0.9375rem; }
+.notice b { font-weight: 700; }
+.notice .glyph { font-family: var(--font-mono); font-weight: 500; flex: none; }
+.notice.ok { background: rgba(111, 203, 154, 0.12); color: var(--star); }
+.notice.ok .glyph { color: var(--jade); }
+.notice.warn { background: rgba(249, 187, 89, 0.12); }
+.notice.warn .glyph { color: var(--gold); }
+.notice.err { background: rgba(255, 143, 112, 0.13); }
+.notice.err .glyph { color: var(--coral); }
+.notice.info { background: rgba(157, 184, 242, 0.12); }
+.notice.info .glyph { color: var(--sky); }
+
+/* ---------- Sections ---------- */
+section.band { padding-block: var(--space-7); border-top: 1px solid var(--rule); }
+.section-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-5); }
+.section-head p { color: var(--star-muted); max-width: 60ch; }
+
+.toolbar { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-5); align-items: center; }
+.chip {
+  font: inherit; font-size: var(--step--1); font-weight: 500; cursor: pointer;
+  background: transparent; color: var(--star-muted); border: 1px solid var(--rule); border-radius: var(--r-sm); padding: 6px 10px;
+}
+.chip[aria-pressed="true"] { color: var(--star); border-color: var(--gold); background: var(--gold-faint); }
+.toolbar .select { width: auto; margin-left: auto; padding-block: 6px; font-size: var(--step--1); }
+
+/* Product page */
+.pdp { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-6); align-items: start; }
+.pdp .tile-inner { transform: none !important; }
+.pdp .face { position: relative; inset: auto; height: 100%; }
+.pdp-info { display: grid; gap: var(--space-4); }
+.pdp-info h2 { font-size: var(--step-3); font-weight: 800; }
+.pdp-info .jp { font-size: var(--step-1); }
+.buy-row { display: flex; gap: var(--space-3); align-items: stretch; flex-wrap: wrap; }
+.qty { display: inline-flex; border: 1px solid var(--rule); border-radius: var(--r-md); }
+.qty button { font: inherit; background: transparent; color: var(--star); border: 0; width: 40px; cursor: pointer; }
+.qty output { font-family: var(--font-mono); min-width: 32px; display: grid; place-items: center; }
+.buy-row .btn-primary { flex: 1 1 220px; }
+.spec-table { width: 100%; border-collapse: collapse; font-size: 0.9375rem; }
+.spec-table th, .spec-table td { text-align: left; padding: 10px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+.spec-table th { font-weight: 500; color: var(--star-muted); width: 40%; }
+.spec-table td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.trust { display: grid; gap: var(--space-2); font-size: 0.9375rem; color: var(--star-muted); padding: 0; margin: 0; list-style: none; }
+.trust li { display: flex; gap: var(--space-2); }
+.trust li::before { content: "✦"; color: var(--gold); font-size: 0.75rem; line-height: 2.1; }
+@media (max-width: 760px) { .pdp { grid-template-columns: 1fr; } .pdp .tile { max-width: 340px; } }
+
+/* System reference */
+.sys { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+@media (max-width: 860px) { .sys { grid-template-columns: 1fr; } }
+.sys h3 { font-family: var(--font-body); font-size: var(--step--1); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--star-muted); margin-bottom: var(--space-3); }
+.specimen { display: grid; gap: var(--space-4); }
+.specimen-row { display: grid; gap: 4px; padding-bottom: var(--space-3); border-bottom: 1px solid var(--rule); }
+.specimen-row .meta { font-family: var(--font-mono); font-size: 0.75rem; color: var(--star-muted); }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--space-3); }
+.swatch { display: grid; gap: 6px; font-size: var(--step--1); }
+.swatch i { display: block; height: 56px; border-radius: var(--r-sm); border: 1px solid var(--rule); }
+.swatch span { font-family: var(--font-mono); color: var(--star-muted); font-size: 0.75rem; }
+.stack { display: grid; gap: var(--space-3); }
+.row { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+
+footer { padding-block: var(--space-6); border-top: 1px solid var(--rule); color: var(--star-muted); font-size: var(--step--1); }
+footer .wrap { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: space-between; }
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="wordmark" href="#top"><svg class="logo" role="img" aria-label="Major Arcana Games" width="187" height="88" viewBox="0 0 187 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.352 22.128C1.86667 21.3173 3.34933 20.912 4.8 20.912C6.272 20.912 7.616 21.2213 8.832 21.84C11.264 23.0987 13.344 25.1573 15.072 28.016L20.8 37.328L30.304 23.152H30.592L34.208 41.872C34.9333 45.712 36.0107 48.3787 37.44 49.872C38.5707 51.0453 40.0107 51.632 41.76 51.632C41.9093 51.632 42.0693 51.632 42.24 51.632V51.952C40.9173 52.5067 39.5413 52.784 38.112 52.784C35.2747 52.784 32.8107 51.6747 30.72 49.456C28.9707 47.6213 27.744 45.0293 27.04 41.68L25.568 34.928L20.096 43.056C19.7333 43.568 19.4133 44.1867 19.136 44.912C18.8587 45.6373 18.7307 46.256 18.752 46.768H18.464L10.688 33.456L9.088 44.208V44.336C9.088 44.6773 9.20533 44.9973 9.44 45.296C9.696 45.5733 9.99467 45.712 10.336 45.712H10.816V46H3.808V45.68H4.32C4.896 45.68 5.39733 45.5093 5.824 45.168C6.272 44.8053 6.54933 44.3253 6.656 43.728L8.864 30C7.776 28.1013 6.57067 26.416 5.248 24.944C3.73333 23.28 2.21867 22.448 0.704 22.448C0.618666 22.448 0.533333 22.448 0.448 22.448L0.352 22.128ZM47.0133 22.832L58.0853 45.808H50.4053L44.2292 31.024L47.0133 22.832ZM40.1333 43.664C39.9413 44.0907 39.8986 44.4533 40.0052 44.752C40.1119 45.0507 40.2933 45.2853 40.5493 45.456C40.8266 45.6053 41.0933 45.68 41.3493 45.68H41.6373V46H34.5012V45.68C34.5012 45.68 34.5546 45.68 34.6612 45.68C34.7466 45.68 34.7892 45.68 34.7892 45.68C35.2799 45.68 35.7812 45.5307 36.2933 45.232C36.8266 44.912 37.2639 44.3893 37.6053 43.664H40.1333ZM47.0133 22.832V27.824L39.1413 45.904H36.5493L44.9013 27.6C45.0079 27.408 45.1466 27.1093 45.3173 26.704C45.5093 26.2773 45.7013 25.8187 45.8933 25.328C46.1066 24.8373 46.2879 24.368 46.4373 23.92C46.6079 23.472 46.7039 23.1093 46.7253 22.832H47.0133ZM49.6373 39.088V40.688H40.5813V39.088H49.6373ZM49.4773 43.664H57.0293C57.3919 44.3893 57.8293 44.912 58.3413 45.232C58.8533 45.5307 59.3546 45.68 59.8453 45.68C59.8453 45.68 59.8879 45.68 59.9733 45.68C60.0586 45.68 60.1013 45.68 60.1013 45.68V46H47.9733V45.68H48.2613C48.6879 45.68 49.0613 45.5093 49.3813 45.168C49.7226 44.8053 49.7546 44.304 49.4773 43.664ZM68.9565 23.6V44.4C68.9565 45.7653 68.6685 46.9707 68.0925 48.016C67.5165 49.0827 66.7378 49.968 65.7565 50.672C64.7752 51.3973 63.6658 51.9093 62.4285 52.208C61.2125 52.5067 59.9538 52.5707 58.6525 52.4V52.112C59.6765 51.6427 60.4552 50.992 60.9885 50.16C61.5432 49.328 61.9165 48.4 62.1085 47.376C62.3005 46.352 62.3965 45.328 62.3965 44.304V23.6H68.9565ZM62.4925 25.936H62.3965C62.3752 25.3813 62.1618 24.912 61.7565 24.528C61.3725 24.1227 60.9032 23.92 60.3485 23.92C60.3485 23.92 60.2738 23.92 60.1245 23.92C59.9965 23.92 59.9325 23.92 59.9325 23.92V23.6H62.4925V25.936ZM68.8605 25.936V23.6H71.4205V23.92C71.4205 23.92 71.3458 23.92 71.1965 23.92C71.0685 23.92 71.0045 23.92 71.0045 23.92C70.4498 23.92 69.9698 24.1227 69.5645 24.528C69.1805 24.912 68.9778 25.3813 68.9565 25.936H68.8605ZM86.15 23.152C88.902 23.152 91.27 23.6213 93.254 24.56C95.2593 25.4773 96.7953 26.8 97.862 28.528C98.9287 30.256 99.462 32.3467 99.462 34.8C99.462 37.232 98.9287 39.3227 97.862 41.072C96.7953 42.8 95.2593 44.1333 93.254 45.072C91.27 45.9893 88.902 46.448 86.15 46.448C83.398 46.448 81.03 45.9893 79.046 45.072C77.062 44.1333 75.5367 42.8 74.47 41.072C73.4033 39.344 72.87 37.2533 72.87 34.8C72.87 32.368 73.4033 30.288 74.47 28.56C75.5367 26.8107 77.062 25.4773 79.046 24.56C81.03 23.6213 83.398 23.152 86.15 23.152ZM86.15 44.848C87.4727 44.848 88.5927 44.4533 89.51 43.664C90.4487 42.8533 91.1633 41.7013 91.654 40.208C92.1447 38.7147 92.39 36.912 92.39 34.8C92.39 32.688 92.1447 30.8853 91.654 29.392C91.1633 27.8987 90.4487 26.7573 89.51 25.968C88.5927 25.1573 87.4727 24.752 86.15 24.752C84.8487 24.752 83.7287 25.1573 82.79 25.968C81.8727 26.7573 81.1687 27.8987 80.678 29.392C80.1873 30.8853 79.942 32.688 79.942 34.8C79.942 36.912 80.1873 38.7147 80.678 40.208C81.1687 41.7013 81.8727 42.8533 82.79 43.664C83.7287 44.4533 84.8487 44.848 86.15 44.848ZM109.854 23.6H113.726C114.686 23.6 115.667 23.6853 116.67 23.856C117.672 24.0267 118.59 24.336 119.422 24.784C120.254 25.2107 120.926 25.8187 121.438 26.608C121.95 27.3973 122.206 28.4107 122.206 29.648C122.206 30.4587 122.056 31.3013 121.758 32.176C121.459 33.0293 120.936 33.7867 120.19 34.448C119.464 35.088 118.43 35.5147 117.086 35.728C117.982 35.984 118.76 36.4213 119.422 37.04C120.083 37.6587 120.606 38.288 120.99 38.928C121.032 38.992 121.139 39.1733 121.31 39.472C121.48 39.7707 121.694 40.144 121.95 40.592C122.227 41.0187 122.515 41.4667 122.814 41.936C123.112 42.4053 123.411 42.8427 123.71 43.248C124.2 43.9093 124.627 44.4107 124.99 44.752C125.352 45.0933 125.715 45.328 126.078 45.456C126.462 45.584 126.91 45.6587 127.422 45.68V46H123.422C122.142 46 120.958 45.9253 119.87 45.776C118.782 45.6267 117.8 45.296 116.926 44.784C116.072 44.272 115.315 43.4613 114.654 42.352C114.419 41.968 114.227 41.584 114.078 41.2C113.928 40.816 113.8 40.4427 113.694 40.08C113.587 39.7173 113.491 39.376 113.406 39.056C113.342 38.7147 113.278 38.3947 113.214 38.096C113.15 37.776 113.075 37.4773 112.99 37.2C112.776 36.432 112.52 35.9093 112.222 35.632C111.923 35.3547 111.624 35.1627 111.326 35.056V34.736C111.411 34.736 111.507 34.736 111.614 34.736C111.72 34.736 111.795 34.736 111.838 34.736C112.435 34.736 112.968 34.5973 113.438 34.32C113.907 34.0427 114.302 33.616 114.622 33.04C114.942 32.464 115.155 31.7173 115.262 30.8C115.283 30.6293 115.304 30.448 115.326 30.256C115.347 30.0427 115.347 29.7867 115.326 29.488C115.24 27.9093 114.846 26.8107 114.142 26.192C113.459 25.5733 112.638 25.264 111.678 25.264C111.571 25.264 111.432 25.264 111.262 25.264C111.091 25.264 110.91 25.264 110.718 25.264C110.526 25.264 110.344 25.264 110.174 25.264C110.174 25.264 110.142 25.1253 110.078 24.848C110.035 24.5707 109.982 24.2933 109.918 24.016C109.875 23.7387 109.854 23.6 109.854 23.6ZM110.27 23.6V46H103.678V23.6H110.27ZM103.774 43.664V46H101.214V45.68C101.256 45.68 101.331 45.68 101.438 45.68C101.544 45.68 101.608 45.68 101.63 45.68C102.184 45.68 102.654 45.488 103.038 45.104C103.443 44.6987 103.656 44.2187 103.678 43.664H103.774ZM103.774 25.936H103.678C103.656 25.3813 103.443 24.912 103.038 24.528C102.654 24.1227 102.184 23.92 101.63 23.92C101.608 23.92 101.544 23.92 101.438 23.92C101.331 23.92 101.256 23.92 101.214 23.92V23.6H103.774V25.936ZM110.174 43.664H110.27C110.27 44.2187 110.472 44.6987 110.878 45.104C111.283 45.488 111.763 45.68 112.318 45.68C112.36 45.68 112.424 45.68 112.51 45.68C112.616 45.68 112.68 45.68 112.702 45.68V46H110.174V43.664Z" fill="white"/>
+<path d="M69.296 81.472C67.6533 82.432 65.9787 82.912 64.272 82.912C62.5653 82.912 60.944 82.592 59.408 81.952C57.8933 81.312 56.4 80.192 54.928 78.592C53.4773 77.0133 52.2827 75.0827 51.344 72.8L50.48 70.688H43.632L42.352 73.664C42.2453 73.9413 42.192 74.1653 42.192 74.336C42.192 74.5067 42.224 74.6987 42.288 74.912C42.3733 75.104 42.5333 75.2853 42.768 75.456C43.024 75.6053 43.2907 75.68 43.568 75.68H43.856V76H36.72V75.68H37.008C37.4987 75.68 37.9787 75.5413 38.448 75.264C38.9387 74.9653 39.344 74.528 39.664 73.952L46.192 59.616C45.552 57.8453 45.0187 56.6613 44.592 56.064C44.1867 55.4453 43.8453 54.976 43.568 54.656C43.056 54.0587 42.416 53.6213 41.648 53.344C41.3493 53.2373 40.9973 53.184 40.592 53.184C40.1867 53.184 39.728 53.28 39.216 53.472L39.152 53.152C40.8587 52.1493 42.4907 51.648 44.048 51.648C46.352 51.648 48.432 52.7787 50.288 55.04C51.2267 56.2133 52.0693 57.632 52.816 59.296L57.936 71.04C58.8747 73.1947 59.568 74.6453 60.016 75.392C60.464 76.1173 60.8587 76.736 61.2 77.248C61.5627 77.7813 61.9147 78.24 62.256 78.624C62.5973 79.008 62.9707 79.3813 63.376 79.744C64.08 80.384 64.9653 80.864 66.032 81.184C66.48 81.3333 66.9707 81.408 67.504 81.408C68.0587 81.408 68.6347 81.3227 69.232 81.152L69.296 81.472ZM44.336 69.088H49.84L47.824 64.128C47.6533 63.744 47.4507 63.2 47.216 62.496L44.336 69.088ZM70.2288 53.6H74.1008C75.0608 53.6 76.0421 53.6853 77.0448 53.856C78.0474 54.0267 78.9648 54.336 79.7968 54.784C80.6288 55.2107 81.3008 55.8187 81.8128 56.608C82.3248 57.3973 82.5808 58.4107 82.5808 59.648C82.5808 60.4587 82.4314 61.3013 82.1328 62.176C81.8341 63.0293 81.3114 63.7867 80.5648 64.448C79.8394 65.088 78.8048 65.5147 77.4608 65.728C78.3568 65.984 79.1354 66.4213 79.7968 67.04C80.4581 67.6587 80.9808 68.288 81.3648 68.928C81.4074 68.992 81.5141 69.1733 81.6848 69.472C81.8554 69.7707 82.0688 70.144 82.3248 70.592C82.6021 71.0187 82.8901 71.4667 83.1888 71.936C83.4874 72.4053 83.7861 72.8427 84.0848 73.248C84.5754 73.9093 85.0021 74.4107 85.3648 74.752C85.7274 75.0933 86.0901 75.328 86.4528 75.456C86.8368 75.584 87.2848 75.6587 87.7968 75.68V76H83.7968C82.5168 76 81.3328 75.9253 80.2448 75.776C79.1568 75.6267 78.1754 75.296 77.3008 74.784C76.4474 74.272 75.6901 73.4613 75.0288 72.352C74.7941 71.968 74.6021 71.584 74.4528 71.2C74.3034 70.816 74.1754 70.4427 74.0688 70.08C73.9621 69.7173 73.8661 69.376 73.7808 69.056C73.7168 68.7147 73.6528 68.3947 73.5888 68.096C73.5248 67.776 73.4501 67.4773 73.3648 67.2C73.1514 66.432 72.8954 65.9093 72.5968 65.632C72.2981 65.3547 71.9994 65.1627 71.7008 65.056V64.736C71.7861 64.736 71.8821 64.736 71.9888 64.736C72.0954 64.736 72.1701 64.736 72.2128 64.736C72.8101 64.736 73.3434 64.5973 73.8128 64.32C74.2821 64.0427 74.6768 63.616 74.9968 63.04C75.3168 62.464 75.5301 61.7173 75.6368 60.8C75.6581 60.6293 75.6794 60.448 75.7008 60.256C75.7221 60.0427 75.7221 59.7867 75.7008 59.488C75.6154 57.9093 75.2208 56.8107 74.5168 56.192C73.8341 55.5733 73.0128 55.264 72.0528 55.264C71.9461 55.264 71.8074 55.264 71.6368 55.264C71.4661 55.264 71.2848 55.264 71.0928 55.264C70.9008 55.264 70.7194 55.264 70.5488 55.264C70.5488 55.264 70.5168 55.1253 70.4528 54.848C70.4101 54.5707 70.3568 54.2933 70.2928 54.016C70.2501 53.7387 70.2288 53.6 70.2288 53.6ZM70.6448 53.6V76H64.0528V53.6H70.6448ZM64.1488 73.664V76H61.5888V75.68C61.6314 75.68 61.7061 75.68 61.8128 75.68C61.9194 75.68 61.9834 75.68 62.0048 75.68C62.5594 75.68 63.0288 75.488 63.4128 75.104C63.8181 74.6987 64.0314 74.2187 64.0528 73.664H64.1488ZM64.1488 55.936H64.0528C64.0314 55.3813 63.8181 54.912 63.4128 54.528C63.0288 54.1227 62.5594 53.92 62.0048 53.92C61.9834 53.92 61.9194 53.92 61.8128 53.92C61.7061 53.92 61.6314 53.92 61.5888 53.92V53.6H64.1488V55.936ZM70.5488 73.664H70.6448C70.6448 74.2187 70.8474 74.6987 71.2528 75.104C71.6581 75.488 72.1381 75.68 72.6928 75.68C72.7354 75.68 72.7994 75.68 72.8848 75.68C72.9914 75.68 73.0554 75.68 73.0768 75.68V76H70.5488V73.664ZM108.547 66.656L109.315 72.48C108.888 73.184 108.291 73.8347 107.523 74.432C106.776 75.0293 105.805 75.52 104.611 75.904C103.437 76.2667 102.008 76.448 100.323 76.448C97.4641 76.4267 94.9788 75.968 92.8668 75.072C90.7761 74.1547 89.1654 72.832 88.0348 71.104C86.9041 69.376 86.3388 67.264 86.3388 64.768C86.3388 62.336 86.8934 60.256 88.0028 58.528C89.1121 56.7787 90.7121 55.4453 92.8028 54.528C94.8934 53.6107 97.4108 53.152 100.355 53.152C102.147 53.152 103.736 53.3013 105.123 53.6C106.531 53.8987 107.683 54.24 108.579 54.624L108.259 60.736H107.971C107.331 58.4747 106.403 56.9173 105.187 56.064C103.971 55.1893 102.541 54.752 100.899 54.752C99.3201 54.752 97.9654 55.1467 96.8348 55.936C95.7254 56.7253 94.8721 57.856 94.2748 59.328C93.6774 60.8 93.3788 62.5813 93.3788 64.672C93.3788 66.7627 93.6561 68.5653 94.2108 70.08C94.7654 71.5733 95.5548 72.736 96.5788 73.568C97.6241 74.3787 98.8721 74.8053 100.323 74.848C102.051 74.848 103.427 74.592 104.451 74.08C105.475 73.568 106.275 72.7147 106.851 71.52C107.427 70.304 107.907 68.6827 108.291 66.656H108.547ZM121.826 52.832L132.898 75.808H125.218L119.042 61.024L121.826 52.832ZM114.946 73.664C114.754 74.0907 114.711 74.4533 114.818 74.752C114.924 75.0507 115.106 75.2853 115.362 75.456C115.639 75.6053 115.906 75.68 116.162 75.68H116.45V76H109.314V75.68C109.314 75.68 109.367 75.68 109.474 75.68C109.559 75.68 109.602 75.68 109.602 75.68C110.092 75.68 110.594 75.5307 111.106 75.232C111.639 74.912 112.076 74.3893 112.418 73.664H114.946ZM121.826 52.832V57.824L113.954 75.904H111.362L119.714 57.6C119.82 57.408 119.959 57.1093 120.13 56.704C120.322 56.2773 120.514 55.8187 120.706 55.328C120.919 54.8373 121.1 54.368 121.25 53.92C121.42 53.472 121.516 53.1093 121.538 52.832H121.826ZM124.45 69.088V70.688H115.394V69.088H124.45ZM124.29 73.664H131.842C132.204 74.3893 132.642 74.912 133.154 75.232C133.666 75.5307 134.167 75.68 134.658 75.68C134.658 75.68 134.7 75.68 134.786 75.68C134.871 75.68 134.914 75.68 134.914 75.68V76H122.786V75.68H123.074C123.5 75.68 123.874 75.5093 124.194 75.168C124.535 74.8053 124.567 74.304 124.29 73.664ZM136.729 53.12L158.329 72.32L158.745 76.448L137.145 57.28L136.729 53.12ZM136.921 73.728V76H134.265V75.68C134.265 75.68 134.361 75.68 134.553 75.68C134.745 75.68 134.852 75.68 134.873 75.68C135.406 75.68 135.865 75.488 136.249 75.104C136.633 74.72 136.825 74.2613 136.825 73.728H136.921ZM143.417 73.728C143.417 74.2613 143.609 74.72 143.993 75.104C144.377 75.488 144.836 75.68 145.369 75.68C145.39 75.68 145.497 75.68 145.689 75.68C145.881 75.68 145.977 75.68 145.977 75.68V76H143.321V73.728H143.417ZM136.729 53.12L143.385 60.032L143.417 76H136.825V57.12C136.825 55.8613 136.75 54.88 136.601 54.176C136.473 53.472 136.409 53.12 136.409 53.12H136.729ZM158.617 53.6V72.352C158.617 73.2267 158.649 73.9733 158.713 74.592C158.798 75.2107 158.873 75.68 158.937 76C159.001 76.2987 159.033 76.448 159.033 76.448H158.745L152.057 69.024V53.6H158.617ZM161.177 53.6V53.92C161.177 53.92 161.081 53.92 160.889 53.92C160.697 53.92 160.601 53.92 160.601 53.92C160.068 53.92 159.609 54.112 159.225 54.496C158.841 54.8587 158.638 55.3173 158.617 55.872H158.521V53.6H161.177ZM149.465 53.6H152.121V55.872H152.057C152.036 55.3173 151.833 54.8587 151.449 54.496C151.086 54.112 150.628 53.92 150.073 53.92C150.073 53.92 149.977 53.92 149.785 53.92C149.593 53.92 149.486 53.92 149.465 53.92V53.6ZM173.045 52.832L184.117 75.808H176.437L170.26 61.024L173.045 52.832ZM166.165 73.664C165.973 74.0907 165.93 74.4533 166.036 74.752C166.143 75.0507 166.325 75.2853 166.581 75.456C166.858 75.6053 167.125 75.68 167.381 75.68H167.669V76H160.532V75.68C160.532 75.68 160.586 75.68 160.692 75.68C160.778 75.68 160.82 75.68 160.82 75.68C161.311 75.68 161.812 75.5307 162.325 75.232C162.858 74.912 163.295 74.3893 163.637 73.664H166.165ZM173.045 52.832V57.824L165.173 75.904H162.581L170.933 57.6C171.039 57.408 171.178 57.1093 171.349 56.704C171.541 56.2773 171.733 55.8187 171.925 55.328C172.138 54.8373 172.319 54.368 172.469 53.92C172.639 53.472 172.735 53.1093 172.757 52.832H173.045ZM175.669 69.088V70.688H166.613V69.088H175.669ZM175.509 73.664H183.061C183.423 74.3893 183.861 74.912 184.373 75.232C184.885 75.5307 185.386 75.68 185.877 75.68C185.877 75.68 185.919 75.68 186.005 75.68C186.09 75.68 186.133 75.68 186.133 75.68V76H174.005V75.68H174.293C174.719 75.68 175.093 75.5093 175.413 75.168C175.754 74.8053 175.786 74.304 175.509 73.664Z" fill="white"/>
+<g clip-path="url(#clip0_25_600)">
+<path d="M147.979 8.11572C148.582 7.93833 148.987 7.75348 149.584 7.77684C151.175 7.83942 152.543 8.69664 153.091 10.3258L162.3 34.8109C162.487 35.2203 162.469 35.8229 162.655 36.2322C162.606 37.8384 161.766 39.2125 160.156 39.7525L145.246 45.2001C144.637 45.5782 144.238 45.5623 143.641 45.539C142.049 45.4764 140.681 44.6185 140.133 42.9891L130.925 18.5049C129.991 16.458 131.054 14.2876 133.069 13.5624L147.979 8.11572ZM169.75 12.7882C171.715 13.6693 172.637 16.1173 171.779 18.0939L166.639 29.7544L167.2 11.4809L169.75 12.7882ZM137.403 21.7462C136.821 21.9583 136.285 22.3393 135.796 22.8902L135.881 23.0059C135.915 22.9934 135.951 22.9815 135.985 22.9691C136.594 22.7478 137.326 22.8643 138.181 23.3193C138.929 23.7241 139.662 24.2329 140.379 24.845L141.525 30.7495C141.571 31.0079 141.53 31.2449 141.404 31.4578C141.283 31.6588 141.106 31.8011 140.875 31.8853L140.669 31.9601L140.717 32.0914L143.532 31.0657L143.489 30.9492L143.297 31.0193C143.16 31.0691 143.018 31.0569 142.875 30.9817C142.736 30.8947 142.641 30.7808 142.591 30.6422L142.572 30.5908L141.624 25.9849L146.718 30.2604L146.833 30.2174C146.749 30.0124 146.709 29.742 146.713 29.407C146.717 29.0718 146.754 28.7734 146.824 28.5124L147.82 24.4076L149.41 26.9372C150.188 28.1957 151.064 29.0716 152.038 29.5617C153.206 30.158 154.361 30.248 155.501 29.8332C156.075 29.6243 156.586 29.31 157.035 28.8914L156.988 28.762L156.795 28.8321C156.093 29.0876 155.428 29.059 154.8 28.7476C154.005 28.3494 153.177 27.4221 152.318 25.9671L148.094 18.885L147.98 18.9277L146.259 26.0814L142.581 23.1311C141.464 22.2217 140.322 21.6894 139.159 21.5332C138.579 21.4597 137.994 21.5311 137.403 21.7462ZM159.539 7.96547C161.727 8.0514 163.463 9.92808 163.395 12.1363L163 24.9869L156.554 7.84838L159.539 7.96547ZM148.564 11.2771C148.523 11.2921 148.488 11.3195 148.463 11.3555C148.438 11.3918 148.425 11.4352 148.425 11.4795L148.426 12.081C148.426 12.5519 148.326 13.0168 148.13 13.4428C147.935 13.8689 147.649 14.2458 147.293 14.5479L146.84 14.9331C146.806 14.9615 146.782 14.9998 146.77 15.0425C146.759 15.0852 146.761 15.1308 146.776 15.1725C146.791 15.2142 146.819 15.251 146.855 15.2766C146.892 15.302 146.935 15.3157 146.979 15.3158L147.573 15.3187C148.04 15.3215 148.502 15.4271 148.926 15.6278C149.349 15.8285 149.725 16.1199 150.027 16.4812L150.413 16.9415C150.441 16.9756 150.479 17.0004 150.522 17.0121C150.564 17.0237 150.609 17.0219 150.65 17.007C150.691 16.992 150.727 16.9645 150.752 16.9282C150.777 16.892 150.79 16.8485 150.79 16.8042L150.789 16.204C150.788 15.733 150.889 15.268 151.085 14.8419C151.28 14.4158 151.566 14.0382 151.921 13.7362L152.376 13.3515C152.409 13.3233 152.433 13.285 152.444 13.2425C152.455 13.1997 152.453 13.1534 152.438 13.1116C152.423 13.0701 152.395 13.034 152.359 13.0085C152.323 12.9831 152.28 12.9691 152.236 12.9689L151.641 12.9654C151.174 12.9626 150.713 12.8575 150.29 12.6569C149.866 12.4562 149.489 12.1651 149.187 11.8038L148.802 11.3423C148.774 11.3081 148.736 11.2834 148.693 11.2717C148.651 11.26 148.605 11.2621 148.564 11.2771Z" fill="#F9BB59"/>
+</g>
+<defs>
+<clipPath id="clip0_25_600">
+<rect width="48" height="48" fill="white" transform="translate(130)"/>
+</clipPath>
+</defs>
+</svg></a>
+    <nav class="nav" aria-label="Main">
+      <a href="#catalogue" aria-current="page">Pokémon</a>
+      <a href="#catalogue">One Piece</a>
+      <a href="#catalogue">Pre-orders</a>
+      <a href="#catalogue">Singles</a>
+    </nav>
+    <button class="cart-btn" type="button" id="cart">Cart <span class="mono" id="cart-count">2</span></button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero: a three-card spread, read left to right in time -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-head">
+        <h1><span class="jp">日本語版 ブースターボックス</span>Japanese booster boxes, factory sealed and shipped from Australia.</h1>
+        <p class="hero-copy">Every box is shrink-wrapped as it left the Japanese distributor. Pre-orders lock in your box at today's price and ship on release day.</p>
+      </div>
+
+      <div class="spread">
+        <div class="spread-slot">
+          <header><strong>Just landed</strong><span class="muted mono">03 Oct</span></header>
+          <article class="tile">
+            <div class="tile-inner">
+              <div class="face face-front">
+                <div class="photo"><span class="code">M1S</span><span class="note">Box photo</span></div>
+                <div class="tile-body">
+                  <span class="jp">メガシンフォニア</span>
+                  <h3>Mega Symphonia</h3>
+                  <div class="tile-foot"><span class="price">A$119.95</span><span class="stock in">In stock</span></div>
+                </div>
+              </div>
+              <div class="face face-back" aria-hidden="true">
+                <p class="back-title">Mega Symphonia</p>
+                <dl class="specs"><dt>Set code</dt><dd>M1S</dd><dt>Box</dt><dd>30 packs × 5</dd><dt>Language</dt><dd>Japanese</dd><dt>Stock</dt><dd>14</dd></dl>
+                <button class="btn btn-primary btn-sm btn-block" type="button" tabindex="-1">Add to cart</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="spread-slot">
+          <header><strong>Releasing next</strong><span class="muted mono">24 Oct</span></header>
+          <article class="tile">
+            <div class="tile-inner">
+              <div class="face face-front">
+                <div class="photo"><span class="code">M1L</span><span class="note">Box photo</span></div>
+                <div class="tile-body">
+                  <span class="jp">メガブレイブ</span>
+                  <h3>Mega Brave</h3>
+                  <div class="tile-foot"><span class="price">A$124.95</span><span class="stock pre">Pre-order</span></div>
+                </div>
+              </div>
+              <div class="face face-back" aria-hidden="true">
+                <p class="back-title">Mega Brave</p>
+                <dl class="specs"><dt>Set code</dt><dd>M1L</dd><dt>Box</dt><dd>30 packs × 5</dd><dt>Ships</dt><dd>24 Oct</dd><dt>Limit</dt><dd>2 per order</dd></dl>
+                <button class="btn btn-primary btn-sm btn-block" type="button" tabindex="-1">Pre-order</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="spread-slot">
+          <header><strong>Pre-orders open</strong><span class="muted mono">12 Dec</span></header>
+          <article class="tile">
+            <div class="tile-inner">
+              <div class="face face-front">
+                <div class="photo"><span class="code">M6a</span><span class="note">Box photo</span></div>
+                <div class="tile-body">
+                  <span class="jp">Japanese title to come</span>
+                  <h3>MEGA 30th Celebration</h3>
+                  <div class="tile-foot"><span class="price">A$339.99</span><span class="stock pre">Pre-order</span></div>
+                </div>
+              </div>
+              <div class="face face-back" aria-hidden="true">
+                <p class="back-title">MEGA 30th Celebration</p>
+                <dl class="specs"><dt>Set code</dt><dd>M6a</dd><dt>Ships</dt><dd>12 Dec</dd><dt>Deposit</dt><dd>None</dd><dt>Limit</dt><dd>1 per order</dd></dl>
+                <button class="btn btn-primary btn-sm btn-block" type="button" tabindex="-1">Pre-order</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalogue -->
+  <section class="band" id="catalogue">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Booster boxes</h2>
+        <p>Hover or tab to a box to turn it over. On a phone, the details sit on the front instead.</p>
+      </div>
+      <div class="toolbar" role="group" aria-label="Filter">
+        <button class="chip" type="button" aria-pressed="true">All</button>
+        <button class="chip" type="button" aria-pressed="false">Pokémon</button>
+        <button class="chip" type="button" aria-pressed="false">One Piece</button>
+        <button class="chip" type="button" aria-pressed="false">In stock</button>
+        <button class="chip" type="button" aria-pressed="false">Pre-order</button>
+        <label class="sr" for="sort" hidden>Sort</label>
+        <select class="select" id="sort" aria-label="Sort"><option>Release date, newest</option><option>Price, low to high</option><option>Price, high to low</option></select>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- Product page -->
+  <section class="band" id="product">
+    <div class="wrap">
+      <div class="pdp">
+        <article class="tile">
+          <div class="tile-inner">
+            <div class="face face-front">
+              <div class="photo" style="min-height: 320px"><span class="code">SV9a</span><span class="note">Box photo · 3 angles + seal close-up</span></div>
+            </div>
+          </div>
+        </article>
+        <div class="pdp-info">
+          <div>
+            <span class="jp">熱風のアリーナ</span>
+            <h2>Heat Wave Arena</h2>
+          </div>
+          <div class="row">
+            <span class="price" style="font-size: var(--step-2)">A$99.95</span>
+            <span class="muted" style="font-size: var(--step--1)">incl. GST</span>
+            <span class="stock low">2 left</span>
+          </div>
+          <div class="buy-row">
+            <div class="qty" role="group" aria-label="Quantity">
+              <button type="button" id="qty-dec" aria-label="Decrease quantity">−</button>
+              <output id="qty" aria-live="polite">1</output>
+              <button type="button" id="qty-inc" aria-label="Increase quantity">+</button>
+            </div>
+            <button class="btn btn-primary" type="button" id="add">Add to cart · A$99.95</button>
+          </div>
+          <div class="notice ok" id="added" hidden><span class="glyph">✓</span><span>Added to your cart. <b>2 boxes</b> are reserved for 15 minutes.</span></div>
+          <table class="spec-table">
+            <tbody>
+              <tr><th scope="row">Set code</th><td>SV9a</td></tr>
+              <tr><th scope="row">Contents</th><td>30 packs × 5 cards</td></tr>
+              <tr><th scope="row">Language</th><td>Japanese</td></tr>
+              <tr><th scope="row">Condition</th><td>Factory sealed, shrink intact</td></tr>
+              <tr><th scope="row">Dispatch</th><td>Next business day</td></tr>
+            </tbody>
+          </table>
+          <ul class="trust">
+            <li>Photographed on arrival, so the box you see is the box you get.</li>
+            <li>Shipped in a double box with corner protectors, tracked and insured.</li>
+            <li>Sealed product can't be returned once the shrink is opened.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System reference -->
+  <section class="band" id="system">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The system</h2>
+        <p>Built from the logo. The brand blue darkens into a midnight ground and comes back at full strength for feature bands. Marigold gold marks the card frames and the one thing you can buy on each screen.</p>
+      </div>
+      <div class="sys">
+        <div>
+          <h3>Type</h3>
+          <div class="specimen">
+            <div class="specimen-row">
+              <span class="meta">Display · Shippori Mincho B1 800</span>
+              <span style="font-family: var(--font-display); font-weight: 800; font-size: 2.25rem; line-height: 1.1">テラスタルフェスex<br>Terastal Festival ex</span>
+            </div>
+            <div class="specimen-row">
+              <span class="meta">Heading · Shippori Mincho B1 700</span>
+              <span style="font-family: var(--font-display); font-weight: 700; font-size: var(--step-2)">Pre-orders for December</span>
+            </div>
+            <div class="specimen-row">
+              <span class="meta">Body &amp; UI · Zen Kaku Gothic New 400 / 500 / 700</span>
+              <span>Japanese booster boxes contain 30 packs of 5 cards, compared with 36 packs of 10 in English sets. Fewer cards, higher hit rates per pack.</span>
+            </div>
+            <div class="specimen-row">
+              <span class="meta">Prices &amp; set codes · JetBrains Mono 500, tabular</span>
+              <span class="mono" style="font-size: 1.125rem">SV8a  A$289.95<br>OP-09 A$189.95<br>M1L   A$124.95</span>
+            </div>
+          </div>
+        </div>
+        <div class="stack">
+          <h3>Color</h3>
+          <div class="swatches">
+            <div class="swatch"><i style="background: var(--brand-blue)"></i>Brand blue <span>#264D97</span></div>
+            <div class="swatch"><i style="background: var(--gold)"></i>Brand gold · action <span>#F9BB59</span></div>
+            <div class="swatch"><i style="background: var(--on-gold)"></i>Brand ink · on gold <span>#222222</span></div>
+            <div class="swatch"><i style="background: var(--night)"></i>Midnight · ground <span>#0D1630</span></div>
+            <div class="swatch"><i style="background: var(--night-raised)"></i>Midnight raised <span>#16224A</span></div>
+            <div class="swatch"><i style="background: var(--star)"></i>Starlight · text <span>#F6F1E7</span></div>
+            <div class="swatch"><i style="background: var(--star-muted)"></i>Starlight muted <span>#A9B4CF</span></div>
+            <div class="swatch"><i style="background: var(--jade)"></i>Jade · in stock <span>#6FCB9A</span></div>
+            <div class="swatch"><i style="background: var(--coral)"></i>Coral · low / error <span>#FF8F70</span></div>
+            <div class="swatch"><i style="background: var(--sky)"></i>Sky · pre-order <span>#9DB8F2</span></div>
+          </div>
+
+          <h3 style="margin-top: var(--space-4)">Controls</h3>
+          <div class="row">
+            <button class="btn btn-primary" type="button">Add to cart</button>
+            <button class="btn btn-secondary" type="button">Notify me</button>
+            <button class="btn btn-ghost" type="button">View set list</button>
+            <button class="btn" type="button" disabled>Sold out</button>
+          </div>
+          <div class="row" style="align-items: start">
+            <div class="field" style="flex: 1 1 200px">
+              <label for="email">Email for restock alerts</label>
+              <input class="input" id="email" type="email" placeholder="you@example.com">
+            </div>
+            <div class="field" style="flex: 1 1 200px">
+              <label for="postcode">Postcode</label>
+              <input class="input is-error" id="postcode" value="20O0" aria-invalid="true" aria-describedby="postcode-err">
+              <span class="err" id="postcode-err">Postcodes are 4 digits. Check for a letter O instead of a zero.</span>
+            </div>
+          </div>
+          <div class="stack" style="gap: var(--space-2)">
+            <div class="notice ok"><span class="glyph">✓</span><span>Order MAG-10482 is packed and leaves today.</span></div>
+            <div class="notice info"><span class="glyph">✦</span><span>Pre-orders are charged when you order and ship on release day.</span></div>
+            <div class="notice warn"><span class="glyph">!</span><span>Only 2 left. Your cart holds them for 15 minutes.</span></div>
+            <div class="notice err"><span class="glyph">×</span><span>Terastal Festival ex sold out while it was in your cart. We've removed it and left the rest of your order as it was.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Major Arcana Games · design preview</span>
+    <span>Sample listings. Prices, stock and dates are placeholders for the design.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var products = [
+    { code: "M1L", jp: "メガブレイブ", en: "Mega Brave", price: "124.95", stock: "pre", label: "Pre-order", box: "30 packs × 5", extra: ["Ships", "24 Oct"] },
+    { code: "M1S", jp: "メガシンフォニア", en: "Mega Symphonia", price: "119.95", stock: "in", label: "In stock", box: "30 packs × 5", extra: ["Stock", "14"] },
+    { code: "OP-09", jp: "新たなる皇帝", en: "Emperors in the New World", price: "189.95", stock: "in", label: "In stock", box: "24 packs × 6", extra: ["Stock", "6"] },
+    { code: "SV9a", jp: "熱風のアリーナ", en: "Heat Wave Arena", price: "99.95", stock: "low", label: "2 left", box: "30 packs × 5", extra: ["Stock", "2"] },
+    { code: "SV8a", jp: "テラスタルフェスex", en: "Terastal Festival ex", price: "289.95", stock: "out", label: "Sold out", box: "10 packs × 10", extra: ["Restock", "Unknown"] },
+    { code: "M6a", jp: "", en: "MEGA 30th Celebration", price: "339.99", stock: "pre", label: "Pre-order", box: "TBC", extra: ["Ships", "12 Dec"] }
+  ];
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  var html = products.map(function (p) {
+    var out = p.stock === "out";
+    var action = out ? '<button class="btn btn-secondary btn-sm btn-block" type="button">Notify me</button>'
+                     : '<button class="btn btn-primary btn-sm btn-block" type="button">' + (p.stock === "pre" ? "Pre-order" : "Add to cart") + "</button>";
+    return '<article class="tile' + (out ? " is-out" : "") + '" tabindex="0" aria-label="' + esc(p.en) + '">' +
+      '<div class="tile-inner">' +
+        '<div class="face face-front">' +
+          '<div class="photo"><span class="code">' + esc(p.code) + '</span><span class="note">Box photo</span></div>' +
+          '<div class="tile-body">' +
+            '<span class="jp">' + (p.jp ? esc(p.jp) : "Japanese title to come") + "</span>" +
+            "<h3>" + esc(p.en) + "</h3>" +
+            '<div class="tile-foot"><span class="price">A$' + p.price + '</span><span class="stock ' + p.stock + '">' + esc(p.label) + "</span></div>" +
+            '<div class="touch-only"><span class="muted mono">' + esc(p.code) + " · " + esc(p.box) + "</span>" + action + "</div>" +
+          "</div>" +
+        "</div>" +
+        '<div class="face face-back">' +
+          '<p class="back-title">' + esc(p.en) + "</p>" +
+          '<dl class="specs"><dt>Set code</dt><dd>' + esc(p.code) + "</dd><dt>Box</dt><dd>" + esc(p.box) + "</dd><dt>Language</dt><dd>Japanese</dd><dt>" + esc(p.extra[0]) + "</dt><dd>" + esc(p.extra[1]) + "</dd></dl>" +
+          action +
+        "</div>" +
+      "</div></article>";
+  }).join("");
+  document.getElementById("grid").innerHTML = html;
+
+  document.querySelectorAll(".chip").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      document.querySelectorAll(".chip").forEach(function (c) { c.setAttribute("aria-pressed", String(c === chip)); });
+    });
+  });
+
+  var qty = 1, unit = 99.95, max = 2;
+  var out = document.getElementById("qty"), add = document.getElementById("add");
+  function render() { out.textContent = qty; add.textContent = "Add to cart · A$" + (qty * unit).toFixed(2); }
+  document.getElementById("qty-dec").addEventListener("click", function () { if (qty > 1) { qty--; render(); } });
+  document.getElementById("qty-inc").addEventListener("click", function () { if (qty < max) { qty++; render(); } });
+  add.addEventListener("click", function () {
+    var n = document.getElementById("added");
+    n.querySelector("b").textContent = qty + (qty === 1 ? " box is" : " boxes are");
+    n.hidden = false;
+    var c = document.getElementById("cart-count");
+    c.textContent = Number(c.textContent) + qty;
+  });
+})();
+</script>
