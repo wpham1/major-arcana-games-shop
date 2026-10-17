@@ -1,8 +1,10 @@
-const usd = new Intl.NumberFormat("en-US", {
+// Prices are stored in cents, AUD, GST included.
+const aud = new Intl.NumberFormat("en-AU", {
   style: "currency",
-  currency: "USD",
+  currency: "AUD",
+  currencyDisplay: "narrowSymbol",
 });
 
 export function formatPrice(cents: number) {
-  return usd.format(cents / 100);
+  return `A${aud.format(cents / 100)}`;
 }

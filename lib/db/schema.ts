@@ -72,7 +72,7 @@ export const orders = pgTable("orders", {
   email: text("email"),
   stripeCheckoutSessionId: text("stripe_checkout_session_id").unique(),
   subtotalCents: integer("subtotal_cents").notNull(),
-  currency: text("currency").notNull().default("usd"),
+  currency: text("currency").notNull().default("aud"),
   paidAt: timestamp("paid_at", { withTimezone: true }),
   ...timestamps,
 });
