@@ -166,3 +166,4 @@ Tiles sit on `night-raised` with a soft offset shadow (`0 10px 24px -14px rgba(0
 | 2026-10-17 | Palette rebuilt on brand colours | Logo files supplied `#264D97`, `#F9BB59`, `#222222`; replaced the first-draft lacquer/vermilion palette |
 | 2026-10-17 | Dark only, no light theme | Use scene (evening, phone) and the white-text logo lockup; a light variant drifts toward a generic cream/serif look |
 | 2026-10-17 | Card-proportion tiles with flip | Echoes the fanned-card logo; turns the catalogue into a spread; flip shows box contents without a page load |
+| 2026-10-17 | Tokens wired into the Next.js app | Tailwind v4 `@theme` in `app/globals.css`, fonts via `next/font/google`, card flip as plain CSS; products gained `name_ja`, `set_code` and `releases_on` |

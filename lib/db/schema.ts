@@ -1,6 +1,7 @@
 import { relations, sql } from "drizzle-orm";
 import {
   check,
+  date,
   integer,
   pgEnum,
   pgTable,
@@ -38,6 +39,14 @@ export const products = pgTable("products", {
   // Matches Shopify's /products/<handle> URLs so old links keep working.
   slug: text("slug").notNull().unique(),
   name: text("name").notNull(),
+  // The Japanese product title, shown above the English one. Null until
+  // someone enters it; the storefront says so rather than leaving a gap.
+  nameJa: text("name_ja"),
+  // Publisher set code, e.g. "SV9a" or "OP-09". Collectors search by it.
+  setCode: text("set_code"),
+  // Release day in Japan time. A product releasing after today sells as a
+  // pre-order.
+  releasesOn: date("releases_on"),
   description: text("description").notNull().default(""),
   status: productStatus("status").notNull().default("draft"),
   ...timestamps,

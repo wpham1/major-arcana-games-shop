@@ -2,20 +2,22 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { connection } from "next/server";
 import { Suspense } from "react";
-import { formatPrice } from "@/lib/format";
+import { AvailabilityBadge } from "@/components/availability-badge";
+import { getAvailability, todayInJapan } from "@/lib/availability";
+import { formatPrice, formatReleaseDate } from "@/lib/format";
 import { getStock } from "@/lib/inventory";
 import { getProductBySlug } from "@/lib/products";
 
 export default function ProductPage({ params }: PageProps<"/products/[slug]">) {
   return (
-    <main className="mx-auto w-full max-w-3xl px-4 py-12">
+    <main className="mx-auto w-full max-w-6xl px-4 py-12">
       <Link
         href="/products"
-        className="text-sm text-zinc-600 hover:underline dark:text-zinc-400"
+        className="text-sm text-star-muted transition-colors hover:text-star"
       >
-        &larr; All products
+        &larr; All booster boxes
       </Link>
-      <Suspense fallback={<p className="mt-6">Loading…</p>}>
+      <Suspense fallback={<p className="mt-6 text-star-muted">Loading…</p>}>
         <ProductDetails params={params} />
       </Suspense>
     </main>
@@ -30,55 +32,130 @@ async function ProductDetails({
   if (!product) notFound();
 
   return (
-    <article className="mt-6">
-      <h1 className="text-3xl font-semibold tracking-tight">{product.name}</h1>
-      {product.description && (
-        <p className="mt-4 leading-7 text-zinc-700 dark:text-zinc-300">
-          {product.description}
-        </p>
-      )}
-      {/* Name and prices above are cached; stock below is read fresh on
-          every request and streams in. */}
-      <Suspense
-        fallback={<p className="mt-8 text-zinc-500">Checking stock…</p>}
-      >
-        <VariantList variants={product.variants} />
-      </Suspense>
+    <article className="mt-8 grid items-start gap-12 md:grid-cols-[0.9fr_1.1fr]">
+      {/* Card-framed photo well. No photos yet, so the set code stands in. */}
+      <div className="card-face relative! aspect-[63/88] max-w-[340px] md:max-w-none">
+        <div className="grid flex-1 place-items-center rounded-sm bg-night-sunk">
+          <span className="font-display text-5xl font-extrabold text-gold/60">
+            {product.setCode ?? "✦"}
+          </span>
+        </div>
+      </div>
+
+      <div className="grid gap-6">
+        <div>
+          <p className="font-display text-xl text-star-muted">
+            {product.nameJa ?? "Japanese title to come"}
+          </p>
+          <h1 className="font-display text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.15] font-extrabold">
+            {product.name}
+          </h1>
+        </div>
+
+        {product.description && (
+          <p className="max-w-[65ch] text-star-muted">{product.description}</p>
+        )}
+
+        {/* Name and prices above are cached; stock below is read fresh on
+            every request and streams in. */}
+        <Suspense
+          fallback={
+            <VariantList
+              variants={product.variants}
+              releasesOn={product.releasesOn}
+              stock={null}
+              today={null}
+            />
+          }
+        >
+          <VariantListWithStock
+            variants={product.variants}
+            releasesOn={product.releasesOn}
+          />
+        </Suspense>
+
+        <table className="w-full border-collapse text-[0.9375rem]">
+          <tbody>
+            {[
+              ["Set code", product.setCode],
+              ["Release", product.releasesOn && formatReleaseDate(product.releasesOn)],
+              ["Language", "Japanese"],
+              ["Condition", "Factory sealed, shrink intact"],
+            ]
+              .filter(([, value]) => value)
+              .map(([label, value]) => (
+                <tr key={label} className="border-b border-rule">
+                  <th
+                    scope="row"
+                    className="w-2/5 py-2.5 text-left font-medium text-star-muted"
+                  >
+                    {label}
+                  </th>
+                  <td className="py-2.5 font-mono tabular-nums">{value}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
     </article>
   );
 }
 
-async function VariantList({
+type Variant = { id: number; name: string; priceCents: number };
+
+async function VariantListWithStock({
   variants,
+  releasesOn,
 }: {
-  variants: { id: number; name: string; priceCents: number }[];
+  variants: Variant[];
+  releasesOn: string | null;
 }) {
   await connection();
   const stock = await getStock(variants.map((v) => v.id));
-
   return (
-    <ul className="mt-8 divide-y divide-black/10 border-y border-black/10 dark:divide-white/15 dark:border-white/15">
-      {variants.map((variant) => {
-        const available = stock.get(variant.id) ?? 0;
-        return (
-          <li
-            key={variant.id}
-            className="flex items-center justify-between gap-4 py-4"
-          >
-            <div>
-              <p className="font-medium">{variant.name}</p>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400">
-                {available === 0
-                  ? "Sold out"
-                  : available <= 5
-                    ? `Only ${available} left`
-                    : "In stock"}
-              </p>
-            </div>
-            <p className="font-medium">{formatPrice(variant.priceCents)}</p>
-          </li>
-        );
-      })}
+    <VariantList
+      variants={variants}
+      releasesOn={releasesOn}
+      stock={stock}
+      today={todayInJapan(new Date())}
+    />
+  );
+}
+
+function VariantList({
+  variants,
+  releasesOn,
+  stock,
+  today,
+}: {
+  variants: Variant[];
+  releasesOn: string | null;
+  /** null while live stock is still loading. */
+  stock: Map<number, number> | null;
+  today: string | null;
+}) {
+  return (
+    <ul className="divide-y divide-rule border-y border-rule">
+      {variants.map((variant) => (
+        <li
+          key={variant.id}
+          className="flex items-center justify-between gap-4 py-4"
+        >
+          <div className="grid gap-1">
+            <p className="font-medium">{variant.name}</p>
+            <AvailabilityBadge
+              availability={
+                stock && today
+                  ? getAvailability(releasesOn, stock.get(variant.id) ?? 0, today)
+                  : null
+              }
+            />
+          </div>
+          <p className="font-mono text-xl font-medium tabular-nums">
+            {formatPrice(variant.priceCents)}
+          </p>
+        </li>
+      ))}
     </ul>
   );
 }

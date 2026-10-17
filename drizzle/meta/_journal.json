@@ -15,6 +15,13 @@
       "when": 1792235157870,
       "tag": "0001_default_currency_aud",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792235497305,
+      "tag": "0002_product_display_fields",
+      "breakpoints": true
     }
   ]
 }
